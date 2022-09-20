@@ -11,7 +11,7 @@
 #define moteur_gauche 0
 
 void InitPWM(void);
-void PWMSetSpeed(float vitesseEnPourcents, int mot);
-PWMUpdateSpeed();
-
+//void PWMSetSpeed(float vitesseEnPourcents, int mot);
+void PWMUpdateSpeed();
+void PWMSetSpeedConsigne(float vitesseEnPourcents, char moteur);
 #endif	/* PWM_H */
