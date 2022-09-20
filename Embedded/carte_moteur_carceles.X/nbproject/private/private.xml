@@ -4,7 +4,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/Robot.h</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/nbproject/Makefile-impl.mk</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/PWM.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/main.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/Robot.c</file>
@@ -14,7 +13,6 @@
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/timer.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/ADC.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/IO.c</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/nbproject/Makefile-default.mk</file>
         </group>
     </open-files>
 </project-private>
