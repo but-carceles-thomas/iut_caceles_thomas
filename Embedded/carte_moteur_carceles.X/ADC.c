@@ -1,7 +1,7 @@
 #include <xc.h>
 #include "adc.h" 
 #include "IO.h"
-//#include « main.h »
+#include "main.h"
 
 unsigned char ADCResultIndex = 0;
 static unsigned int ADCResult[4];

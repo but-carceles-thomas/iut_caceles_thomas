@@ -11,6 +11,7 @@
       <itemPath>ToolBox.h</itemPath>
       <itemPath>PWM.h</itemPath>
       <itemPath>adc.h</itemPath>
+      <itemPath>main.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -44,7 +45,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.60</languageToolchainVersion>
+        <languageToolchainVersion>2.00</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

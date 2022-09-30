@@ -12,7 +12,7 @@
 
 
 
-#define FCY 40000000
+//#define FCY 40000000
 
 
 
