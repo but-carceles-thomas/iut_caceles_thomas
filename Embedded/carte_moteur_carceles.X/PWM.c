@@ -7,7 +7,7 @@
 #include "main.h"
 
 #define PWMPER 40.0
-unsigned char acceleration = 5;
+unsigned char acceleration = 60;
 
 void InitPWM(void) {
     PTCON2bits.PCLKDIV = 0b000; //Divide by 1
@@ -79,7 +79,7 @@ void PWMUpdateSpeed() {
             robotState.vitesseDroiteCommandeCourante - acceleration,
             robotState.vitesseDroiteConsigne);
 
-    if (robotState.vitesseDroiteCommandeCourante > 0) {
+    if (robotState.vitesseDroiteCommandeCourante < 0) {
         MOTEUR_DROIT_L_PWM_ENABLE = 0; //pilotage de la pin en mode IO
         MOTEUR_DROIT_L_IO_OUTPUT = 1; //Mise à 1 de la pin
         MOTEUR_DROIT_H_PWM_ENABLE = 1; //Pilotage de la pin en mode PWM

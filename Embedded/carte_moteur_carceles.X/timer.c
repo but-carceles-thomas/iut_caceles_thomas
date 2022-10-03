@@ -31,7 +31,7 @@ void InitTimer23(void) {
 
 void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) {
     IFS0bits.T3IF = 0; // Clear Timer3 Interrupt Flag
-    LED_ORANGE = !LED_ORANGE;
+    //LED_ORANGE = !LED_ORANGE;
    // if (change == 0) {
       //  PWMSetSpeedConsigne(-20, moteur_gauche);
        // PWMSetSpeedConsigne(20, moteur_droit);
@@ -64,7 +64,7 @@ void SetFreqTimer1(float freq) {
 }
 
 void InitTimer1(void) {
-    SetFreqTimer1(150.5);
+    SetFreqTimer1(160.5);
     //Timer1 pour horodater les mesures (1ms)
     T1CONbits.TON = 0; // Disable Timer
     T1CONbits.TCS = 0; //clock source = internal clock
@@ -81,7 +81,7 @@ void InitTimer1(void) {
 
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
-    //PWMUpdateSpeed();
+    PWMUpdateSpeed();
     ADC1StartConversionSequence();
 }
 
