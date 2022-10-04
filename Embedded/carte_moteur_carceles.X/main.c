@@ -157,25 +157,25 @@ void SetNextRobotStateInAutomaticMode(void) {
     unsigned char positionObstacle = PAS_D_OBSTACLE;
 
     //Détermination de la position des obstacles en fonction des télémètres
-    if (robotState.distanceTelemetreDroit < 20 &&
-            robotState.distanceTelemetreExDroit < 30 &&
+    if (robotState.distanceTelemetreDroit < 30 &&
+            robotState.distanceTelemetreExDroit < 20 &&
             robotState.distanceTelemetreCentre > 20 &&
-            robotState.distanceTelemetreExGauche > 30 &&
-            robotState.distanceTelemetreGauche > 20) //Obstacle à droite
+            robotState.distanceTelemetreExGauche > 20 &&
+            robotState.distanceTelemetreGauche > 30) //Obstacle à droite
         positionObstacle = OBSTACLE_A_DROITE;
-    else if (robotState.distanceTelemetreDroit > 20 &&
-            robotState.distanceTelemetreExDroit > 30 &&
+    else if (robotState.distanceTelemetreDroit > 30 &&
+            robotState.distanceTelemetreExDroit > 20 &&
             robotState.distanceTelemetreCentre > 20 &&
-            robotState.distanceTelemetreExGauche < 30 &&
-            robotState.distanceTelemetreGauche < 20) //Obstacle à gauche
+            robotState.distanceTelemetreExGauche < 20 &&
+            robotState.distanceTelemetreGauche < 30) //Obstacle à gauche
         positionObstacle = OBSTACLE_A_GAUCHE;
     else if (robotState.distanceTelemetreCentre < 20) //Obstacle en face
         positionObstacle = OBSTACLE_EN_FACE;
-    else if (robotState.distanceTelemetreDroit > 20 &&
-            robotState.distanceTelemetreExDroit > 30 &&
+    else if (robotState.distanceTelemetreDroit > 30 &&
+            robotState.distanceTelemetreExDroit > 20 &&
             robotState.distanceTelemetreCentre > 20 &&
-            robotState.distanceTelemetreExGauche > 30 &&
-            robotState.distanceTelemetreGauche > 20) //pas d?obstacle
+            robotState.distanceTelemetreExGauche > 20 &&
+            robotState.distanceTelemetreGauche > 30) //pas d?obstacle
         positionObstacle = PAS_D_OBSTACLE;
     
 
