@@ -7,7 +7,7 @@
 #include "main.h"
 
 #define PWMPER 40.0
-unsigned char acceleration = 60;
+unsigned char acceleration = 50;
 
 void InitPWM(void) {
     PTCON2bits.PCLKDIV = 0b000; //Divide by 1
