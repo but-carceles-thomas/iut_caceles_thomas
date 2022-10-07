@@ -64,7 +64,7 @@ void SetFreqTimer1(float freq) {
 }
 
 void InitTimer1(void) {
-    SetFreqTimer1(160.5);
+    SetFreqTimer1(250.5);
     //Timer1 pour horodater les mesures (1ms)
     T1CONbits.TON = 0; // Disable Timer
     T1CONbits.TCS = 0; //clock source = internal clock
@@ -83,6 +83,7 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     PWMUpdateSpeed();
     ADC1StartConversionSequence();
+    SetNextRobotStateInAutomaticMode();
 }
 
 // Initialisation d'un 2e timer 16 bits
@@ -120,6 +121,7 @@ void initTimer4(void) {
 // Interruption du timer 4
 
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
+    OperatingSystemLoop();
     timestamp = timestamp + 1;
     IFS1bits.T4IF = 0;
 }
