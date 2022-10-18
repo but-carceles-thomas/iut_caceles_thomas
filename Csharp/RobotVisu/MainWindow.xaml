@@ -1,0 +1,12 @@
+﻿<Window x:Class="RobotVisu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RobotVisu"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <GroupBox x:Name="groupBox" Header="GroupBox" HorizontalAlignment="Left" Height="337" Margin="22,37,0,0" VerticalAlignment="Top" Width="287" Background="#E5134DEA"/>
+    </Grid>
+</Window>
