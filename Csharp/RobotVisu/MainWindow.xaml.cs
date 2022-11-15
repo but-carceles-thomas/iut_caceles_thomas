@@ -51,7 +51,11 @@ namespace RobotVisu
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
             robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
-        }
+            robot.byteListReceived.Enqueue(byteList);
+
+
+
+		}
 
         bool toggle = true;
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
