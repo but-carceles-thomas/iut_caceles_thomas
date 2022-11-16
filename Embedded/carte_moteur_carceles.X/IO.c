@@ -49,9 +49,14 @@ void InitIO() {
     _TRISB15 = 0;
     _TRISC6 = 0;
     _TRISC7 = 0;
+    
+    _RP36R = 0b00001; //Remappe la sortie Tx1 vers RP 36
 
 
     //********** Configuration des entrées : _TRISxx = 1 ********************************   
+    _U1RXR = 24; //Remappe la RP sur l'entré Rx1
+    
+    
     //_TRISB1 = 1
     //_TRISC0 = 1;
     //_TRISC11 = 1;

@@ -12,6 +12,7 @@
       <itemPath>PWM.h</itemPath>
       <itemPath>adc.h</itemPath>
       <itemPath>main.h</itemPath>
+      <itemPath>UART.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -28,6 +29,7 @@
       <itemPath>ToolBox.c</itemPath>
       <itemPath>PWM.c</itemPath>
       <itemPath>ADC.c</itemPath>
+      <itemPath>UART.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -45,7 +47,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD4Tool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>2.00</languageToolchainVersion>
+        <languageToolchainVersion>1.60</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

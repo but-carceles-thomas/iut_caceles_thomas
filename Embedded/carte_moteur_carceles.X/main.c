@@ -9,6 +9,7 @@
 #include "Robot.h"
 #include "ToolBox.h"
 #include "main.h"
+#include "UART.h"
 
 unsigned int ADCValue0;
 unsigned int ADCValue1;
@@ -39,6 +40,7 @@ int main(void) {
 
     InitPWM();
     InitADC1();
+    InitUART();
     /****************************************************************************************************/
     // Boucle Principale
     /****************************************************************************************************/
@@ -82,7 +84,8 @@ int main(void) {
             LED_BLANCHE = 0;
         }
         
-        
+        SendMessageDirect((unsigned char*) "Bonjour", 7);
+        __delay32(40000000);
 
     }
 }
