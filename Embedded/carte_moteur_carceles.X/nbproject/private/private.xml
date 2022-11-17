@@ -4,12 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/UART.h</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/timer.h</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/main.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/UART.c</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/timer.c</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/main.h</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/IO.c</file>
+            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/CB_TX1.c</file>
+            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/CB_TX1.h</file>
         </group>
     </open-files>
 </project-private>
