@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "CB_TX1.h"
-#include "UART.h"
 #define CBTX1_BUFFER_SIZE 128
 
 int cbTx1Head;
@@ -23,11 +22,15 @@ void SendMessage(unsigned char* message, int length) {
 }
 
 void CB_TX1_Add(unsigned char value) {
-    SendMessageDirect();
+    cbTx1Buffer[cbTx1Tail] = value;
+    cbTx1Tail++;
 }
 
 unsigned char CB_TX1_Get(void) {
-    
+    unsigned char c;
+   c = cbTx1Buffer[cbTx1Head];
+    cbTx1Head++;
+    return c;
 }
 
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void) {
@@ -42,6 +45,7 @@ void SendOne() {
     isTransmitting = 1;
     unsigned char value = CB_TX1_Get();
     U1TXREG = value; // Transmit one character
+    //isTransmitting = 0;
 }
 
 unsigned char CB_TX1_IsTranmitting(void) {
@@ -50,6 +54,6 @@ unsigned char CB_TX1_IsTranmitting(void) {
 
 int CB_TX1_RemainingSize(void) {
     int rSize;
-    rSize = CBTX1_BUFFER_SIZE;
+    rSize = CBTX1_BUFFER_SIZE-cbTx1Tail;
     return rSize;
 }

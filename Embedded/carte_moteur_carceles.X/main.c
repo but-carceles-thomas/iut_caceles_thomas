@@ -10,6 +10,7 @@
 #include "ToolBox.h"
 #include "main.h"
 #include "UART.h"
+#include "CB_TX1.h"
 
 unsigned int ADCValue0;
 unsigned int ADCValue1;
@@ -44,6 +45,7 @@ int main(void) {
     /****************************************************************************************************/
     // Boucle Principale
     /****************************************************************************************************/
+    
     while (1) {
         if (ADCIsConversionFinished() == 1) {
             ADCClearConversionFinishedFlag();
@@ -84,8 +86,8 @@ int main(void) {
             LED_BLANCHE = 0;
         }
         
-        // SendMessageDirect((unsigned char*) "Bonjour", 7);
-        // __delay32(40000000);
+        
+         SendMessage((unsigned char*) "Bonjour! ", 9);
 
     }
 }
