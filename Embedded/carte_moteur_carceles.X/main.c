@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <xc.h>
+#include <libpic30.h>
 #include "ChipConfig.h"
 #include "IO.h"
 #include "timer.h"
@@ -11,6 +12,7 @@
 #include "main.h"
 #include "UART.h"
 #include "CB_TX1.h"
+#include "CB_RX1.h"
 
 unsigned int ADCValue0;
 unsigned int ADCValue1;
@@ -87,8 +89,13 @@ int main(void) {
         }
         
         
-         SendMessage((unsigned char*) "Bonjour! ", 9);
-
+         // SendMessage((unsigned char*) "Bonjour! ", 9);
+        int i; 
+        for(i=0; i<CB_RX1_GetDataSize(); i++) {
+            unsigned char c = CB_RX1_Get();
+            SendMessage(&c, 1);
+        }
+        __delay32(10000);
     }
 }
 
