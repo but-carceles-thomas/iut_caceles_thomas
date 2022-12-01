@@ -53,10 +53,12 @@ unsigned char CB_TX1_IsTranmitting(void) {
 }
 
 int CB_TX1_RemainingSize(void) {
-    int rSize;
+    int rSize = CBTX1_BUFFER_SIZE;
     rSize = CBTX1_BUFFER_SIZE-cbTx1Tail;
-    if (cbTx1Tail >= CBTX1_BUFFER_SIZE){
-        cbTx1Head =0;
+    if (rSize == 0){
+        rSize = CBTX1_BUFFER_SIZE;
+        //cbTx1Head =0;
+        //cbTx1Tail=0;
         isTransmitting =1;
     }
     return rSize;
