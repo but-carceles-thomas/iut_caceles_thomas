@@ -1,6 +1,7 @@
 #include <xc.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "UART.h"
 #include "CB_TX1.h"
 #define CBTX1_BUFFER_SIZE 128
 
@@ -53,9 +54,9 @@ unsigned char CB_TX1_IsTranmitting(void) {
 }
 
 int CB_TX1_RemainingSize(void) {
-    int rSize = CBTX1_BUFFER_SIZE;
+    int rSize;
     rSize = CBTX1_BUFFER_SIZE-cbTx1Tail;
-    if (rSize == 0){
+    if (rSize <= 0){
         rSize = CBTX1_BUFFER_SIZE;
         //cbTx1Head =0;
         //cbTx1Tail=0;

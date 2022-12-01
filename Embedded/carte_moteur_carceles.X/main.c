@@ -89,7 +89,7 @@ int main(void) {
         }
         
         
-         // SendMessage((unsigned char*) "Bonjour! ", 9);
+//          SendMessage((unsigned char*) "Bonjour! ", 9);
         int i; 
         for(i=0; i<CB_RX1_GetDataSize(); i++) {
             unsigned char c = CB_RX1_Get();
