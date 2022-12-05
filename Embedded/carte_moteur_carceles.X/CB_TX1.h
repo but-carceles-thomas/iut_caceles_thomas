@@ -15,5 +15,6 @@ void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void);
 void SendOne();
 unsigned char CB_TX1_IsTranmitting(void);
 int CB_TX1_RemainingSize(void);
+int CB_TX1_GetDataSize(void);
 
 #endif
