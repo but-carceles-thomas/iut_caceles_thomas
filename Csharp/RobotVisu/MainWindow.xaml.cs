@@ -101,11 +101,50 @@ namespace RobotVisu
         byte[] byteList = new byte[20];
         private void buttontest_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < 20; i++)
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    byteList[i] = (byte)(2 * i);
+            //}
+            //serialPort1.Write(byteList, 0, 20);
+
+            string s = "Bonjour";
+            byteList = Encoding.UTF8.GetBytes(s);
+            UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
+        }
+
+        byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            byte Checksum = 0;
+            Checksum ^= 0xFE;
+            Checksum ^= (byte)(msgFunction >> 8);
+            Checksum ^= (byte)(msgFunction >> 0);
+            Checksum ^= (byte)(msgPayloadLength >> 8);
+            Checksum ^= (byte)(msgPayloadLength >> 0);
+            int i;
+            for (i=0; i < msgPayloadLength; i++)
             {
-                byteList[i] = (byte)(2 * i);
+                Checksum ^= msgPayload[i];
             }
-            serialPort1.Write(byteList, 0, 20);
+            return Checksum;
+        }
+
+        void UartEncodeAndSendMessage (int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            byte[] message = new byte[msgPayloadLength + 6];
+            int pos = 0;
+            message[pos++] = 0xFE;
+            message[pos++] = (byte)(msgFunction >> 8);
+            message[pos++] = (byte)(msgFunction >> 0);
+            message[pos++] = (byte)(msgPayloadLength >> 8);
+            message[pos++] = (byte)(msgPayloadLength >> 0);
+
+            int i;
+            for (i = 0; i < msgPayloadLength; i++)
+            {
+                message[pos++] = msgPayload[i];
+            }
+            message[pos++] = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
+            serialPort1.Write(message, 0, pos);
         }
     }
 }
