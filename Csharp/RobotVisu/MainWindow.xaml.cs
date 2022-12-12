@@ -101,6 +101,8 @@ namespace RobotVisu
         }
 
         byte[] byteList = new byte[20];
+        byte[] byteList2;
+        byte[] byteList3;
         private void buttontest_Click(object sender, RoutedEventArgs e)
         {
             //for (int i = 0; i < 20; i++)
@@ -112,13 +114,30 @@ namespace RobotVisu
             string s = "Bonjour";
             byteList = Encoding.UTF8.GetBytes(s);
             UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
+
+            byteList = new byte[3];
+            byteList[0] = 20;
+            byteList[1] = 30;
+            byteList[2] = 40;
+            UartEncodeAndSendMessage((int)SuperVision.DistanceIR, 3, byteList);
+
+            byteList2 = new byte[2];
+            byteList2[0] = 20;
+            byteList2[1] = 30;
+            UartEncodeAndSendMessage((int)SuperVision.ConsigneVitesse, 2, byteList2);
+
+            byte[] led = { 0x01, 0x01 };
+            UartEncodeAndSendMessage((int)SuperVision.ReglageLED, 2, led);
+
+
+
         }
 
         private void buttontestFalse_Click(object sender, RoutedEventArgs e)
         {
             string s = "Bonjour";
             byteList = Encoding.UTF8.GetBytes(s);
-            UartEncodeAndSendMessageWithError(0x0080, byteList.Length, byteList);
+            UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
         }
 
         byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
@@ -239,6 +258,7 @@ namespace RobotVisu
                         if (msgDecodedPayloadIndex == msgDecodedPayloadLength)
                         {
                             rcvState = StateReception.CheckSum;
+                            SuperVision supervision;
                         }
                     break;
                 case StateReception.CheckSum:
@@ -247,11 +267,61 @@ namespace RobotVisu
                     {
                         //Sucess, on a message valide
                         textBoxReception.Text += "OK : ";
+                        ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
                     }
                     rcvState = StateReception.Waiting;
                     break;
                 default:
                     rcvState = StateReception.Waiting;
+                    break;
+            }
+        }
+
+        public enum SuperVision
+        {
+            TransmissionTexte = 0x0080,
+            ReglageLED = 0x0020,
+            DistanceIR = 0x0030,
+            ConsigneVitesse = 0x0040
+        }
+
+        void ProcessDecodedMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            switch((SuperVision)msgFunction)
+            {
+                case SuperVision.DistanceIR:
+                    labelIRGauche.Content = "IR Gauche : " + msgPayload[0].ToString() + " cm";
+                    labelIRCentre.Content = "IR Centre : " + msgPayload[1].ToString() + " cm";
+                    labelIRDroit.Content = "IR Droit : " + msgPayload[2].ToString() + " cm";
+                    break;
+
+                case SuperVision.ConsigneVitesse:
+                    labelVitesseGauche.Content = "Vitesse Gauche :" + msgPayload[0].ToString() + "%";
+                    labelVitesseDroit.Content = "Vitesse Droit :" + msgPayload[1].ToString() + "%";
+                    break;
+
+                case SuperVision.ReglageLED:
+                    switch (msgPayload[0])
+                    {
+                        case 0:
+                            if(msgPayload[1] == 0)
+                                checkBoxLed1.IsChecked = false;
+                            else
+                                checkBoxLed1.IsChecked = true;
+                            break;
+                        case 1:
+                            if (msgPayload[1] == 0)
+                                CheckBoxLed2.IsChecked = false;
+                            else
+                                CheckBoxLed2.IsChecked = true;
+                            break;
+                        case 2:
+                            if (msgPayload[1] == 0)
+                                checkBoxLed3.IsChecked = false;
+                            else
+                                checkBoxLed3.IsChecked = true;
+                            break;
+                    }
                     break;
             }
         }
