@@ -51,6 +51,7 @@ namespace RobotVisu
             {
                 var c = robot.byteListReceived.Dequeue();
                 textBoxReception.Text += "0x" + c.ToString("X2") + " ";
+                DecodeMessage(c);
             }
         }
 
@@ -60,6 +61,7 @@ namespace RobotVisu
             foreach(var c in e.Data)
             {
                 robot.byteListReceived.Enqueue(c);
+                
             }
 		}
 
@@ -112,6 +114,13 @@ namespace RobotVisu
             UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
         }
 
+        private void buttontestFalse_Click(object sender, RoutedEventArgs e)
+        {
+            string s = "Bonjour";
+            byteList = Encoding.UTF8.GetBytes(s);
+            UartEncodeAndSendMessageWithError(0x0080, byteList.Length, byteList);
+        }
+
         byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
             byte Checksum = 0;
@@ -147,6 +156,27 @@ namespace RobotVisu
             serialPort1.Write(message, 0, pos);
         }
 
+
+        void UartEncodeAndSendMessageWithError(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            byte[] message = new byte[msgPayloadLength + 6];
+            int pos = 0;
+            message[pos++] = 0xFE;
+            message[pos++] = (byte)(msgFunction >> 8);
+            message[pos++] = (byte)(msgFunction >> 0);
+            message[pos++] = (byte)(msgPayloadLength >> 8);
+            message[pos++] = (byte)(msgPayloadLength >> 0);
+
+            int i;
+            for (i = 0; i < msgPayloadLength; i++)
+            {
+                message[pos++] = msgPayload[i];
+            }
+            message[pos++] = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
+            message[3] = 0x23;
+            serialPort1.Write(message, 0, pos);
+        }
+
         public enum StateReception
         {
             Waiting,
@@ -173,6 +203,7 @@ namespace RobotVisu
                     {
                         rcvState = StateReception.FunctionMSB;
                     }
+                    else rcvState = StateReception.Waiting;
                     break;
                 case StateReception.FunctionMSB:
                     msgDecodedFunction = c << 8;
@@ -188,9 +219,20 @@ namespace RobotVisu
                     break;
                 case StateReception.PayloadLengthLSB:
                     msgDecodedPayloadLength += c << 0;
-                    msgDecodedPayload = new byte[msgDecodedPayloadLength];
-                    msgDecodedPayloadIndex = 0;
-                    rcvState = StateReception.Payload;
+                    if (msgDecodedPayloadLength == 0)
+                    {
+                        rcvState = StateReception.CheckSum;
+                    }
+                    else if (msgDecodedPayloadLength >= 1024)
+                    {
+                        rcvState = StateReception.Waiting;
+                    }
+                    else
+                    {
+                        msgDecodedPayload = new byte[msgDecodedPayloadLength];
+                        msgDecodedPayloadIndex = 0;
+                        rcvState = StateReception.Payload;
+                    }
                     break;
                 case StateReception.Payload:
                         msgDecodedPayload[msgDecodedPayloadIndex++] = c;
@@ -204,7 +246,7 @@ namespace RobotVisu
                     if (calculatedChecksum == c)
                     {
                         //Sucess, on a message valide
-                        textBoxReception.Text += "OK : " + msgDecodedPayload;
+                        textBoxReception.Text += "OK : ";
                     }
                     rcvState = StateReception.Waiting;
                     break;

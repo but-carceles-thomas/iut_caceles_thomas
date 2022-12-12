@@ -30,5 +30,6 @@
         <Button x:Name="buttonEnvoyer" Content="Envoyer" Grid.Column="1" HorizontalAlignment="Center" Margin="0" Grid.Row="3" VerticalAlignment="Stretch" Width="100" Click="buttonEnvoyer_Click"/>
         <Button x:Name="buttonClear" Content="Clear" Grid.Column="3" HorizontalAlignment="Center" Margin="0" Grid.Row="3" VerticalAlignment="Stretch" Width="100" Click="buttonClear_Click"/>
         <Button x:Name="buttontest"  Content="test" Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="3" VerticalAlignment="Stretch" Width="75" Click="buttontest_Click"/>
+        <Button x:Name="buttontestFalse"  Content="test" Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="4" VerticalAlignment="Stretch" Width="75" Click="buttontestFalse_Click"/>
     </Grid>
 </Window>
