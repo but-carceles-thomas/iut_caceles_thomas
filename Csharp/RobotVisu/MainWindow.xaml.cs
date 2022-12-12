@@ -102,7 +102,6 @@ namespace RobotVisu
 
         byte[] byteList = new byte[20];
         byte[] byteList2;
-        byte[] byteList3;
         private void buttontest_Click(object sender, RoutedEventArgs e)
         {
             //for (int i = 0; i < 20; i++)
