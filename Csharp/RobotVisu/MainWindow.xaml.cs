@@ -30,7 +30,7 @@ namespace RobotVisu
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM4", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM7", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived; ;
             serialPort1.Open();
 
@@ -50,7 +50,7 @@ namespace RobotVisu
             while(robot.byteListReceived.Count()>0)
             {
                 var c = robot.byteListReceived.Dequeue();
-                textBoxReception.Text += "0x" + c.ToString("X2") + " ";
+                //textBoxReception.Text += "0x" + c.ToString("X2") + " ";
                 DecodeMessage(c);
             }
         }
@@ -115,14 +115,14 @@ namespace RobotVisu
             UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
 
             byteList = new byte[3];
-            byteList[0] = 20;
-            byteList[1] = 30;
-            byteList[2] = 40;
+            byteList[0] = 10;
+            byteList[1] = 20;
+            byteList[2] = 50;
             UartEncodeAndSendMessage((int)SuperVision.DistanceIR, 3, byteList);
 
             byteList2 = new byte[2];
-            byteList2[0] = 20;
-            byteList2[1] = 30;
+            byteList2[0] = 50;
+            byteList2[1] = 60;
             UartEncodeAndSendMessage((int)SuperVision.ConsigneVitesse, 2, byteList2);
 
             byte[] led = { 0x01, 0x01 };
@@ -265,7 +265,7 @@ namespace RobotVisu
                     if (calculatedChecksum == c)
                     {
                         //Sucess, on a message valide
-                        textBoxReception.Text += "OK : ";
+                        //textBoxReception.Text += ": OK ";
                         ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
                     }
                     rcvState = StateReception.Waiting;

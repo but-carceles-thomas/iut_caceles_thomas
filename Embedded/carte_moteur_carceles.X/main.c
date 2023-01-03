@@ -13,6 +13,7 @@
 #include "UART.h"
 #include "CB_TX1.h"
 #include "CB_RX1.h"
+#include "UART_Protocole.h"
 
 unsigned int ADCValue0;
 unsigned int ADCValue1;
@@ -88,12 +89,18 @@ int main(void) {
             } else {
                 LED_BLANCHE = 0;
             }
+            unsigned char payload[] = {robotState.distanceTelemetreGauche, robotState.distanceTelemetreCentre, robotState.distanceTelemetreDroit};
+            UartEncodeAndSendMessage(0x0030, 3, payload);
         }
+        
         int i;
         for (i = 0; i < CB_RX1_GetDataSize(); i++) {
             unsigned char c = CB_RX1_Get();
             SendMessage(&c, 1);
         }
+        //        unsigned char payload[] = {'B', 'o', 'n', 'j', 'o', 'u', 'r'};
+        //        UartEncodeAndSendMessage(0x0080, 7, payload);
+        //        __delay32(40000000);
     }
 }
 
