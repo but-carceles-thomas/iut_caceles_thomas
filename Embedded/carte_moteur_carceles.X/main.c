@@ -70,9 +70,6 @@ int main(void) {
             volts = ((float) result [4])*3.3 / 4096 * 3.2;
             robotState.distanceTelemetreExGauche = 34 / volts - 5;
 
-
-
-
             if (robotState.distanceTelemetreDroit < 30 || robotState.distanceTelemetreExDroit < 30) {
                 LED_ORANGE = 1;
             } else {
@@ -92,7 +89,7 @@ int main(void) {
             unsigned char payload[] = {robotState.distanceTelemetreGauche, robotState.distanceTelemetreCentre, robotState.distanceTelemetreDroit};
             UartEncodeAndSendMessage(0x0030, 3, payload);
         }
-        
+
         int i;
         for (i = 0; i < CB_RX1_GetDataSize(); i++) {
             unsigned char c = CB_RX1_Get();
