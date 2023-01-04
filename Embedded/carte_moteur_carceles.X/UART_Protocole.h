@@ -15,6 +15,11 @@ void UartEncodeAndSendMessage(int msgFunction,
 void UartDecodeMessage(unsigned char c);
 void UartProcessDecodedMessage(unsigned char function,
         unsigned char payloadLength, unsigned char* payload);
+void SetRobotState(unsigned char state);
+void SetRobotAutoControlState(unsigned char state);
+
+#define SET_ROBOT_STATE 0x0051
+#define SET_ROBOT_MANUAL_CONTROL 0x0052
 
 
 #endif	/* UART_PROTOCOLE_H */
