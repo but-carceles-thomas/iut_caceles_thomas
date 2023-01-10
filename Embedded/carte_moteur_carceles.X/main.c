@@ -96,7 +96,7 @@ int main(void) {
             //SendMessage(&c, 1);
             UartDecodeMessage(c);
         }
-        
+
         //        unsigned char payload[] = {'B', 'o', 'n', 'j', 'o', 'u', 'r'};
         //        UartEncodeAndSendMessage(0x0080, 7, payload);
         //        __delay32(40000000);
@@ -119,32 +119,32 @@ void OperatingSystemLoop(void) {
             break;
 
         case STATE_AVANCE:
-            PWMSetSpeedConsigne(10, moteur_droit);
-            PWMSetSpeedConsigne(10, moteur_gauche);
+            PWMSetSpeedConsigne(15, moteur_droit);
+            PWMSetSpeedConsigne(15, moteur_gauche);
             stateRobot = STATE_AVANCE_EN_COURS;
             break;
         case STATE_AVANCE_EN_COURS:
-            if(autoControl)
+            if (autoControl)
                 SetNextRobotStateInAutomaticMode();
             break;
 
         case STATE_TOURNE_GAUCHE:
-            PWMSetSpeedConsigne(10, moteur_droit);
-            PWMSetSpeedConsigne(-10, moteur_gauche);
+            PWMSetSpeedConsigne(15, moteur_droit);
+            PWMSetSpeedConsigne(-15, moteur_gauche);
             stateRobot = STATE_TOURNE_GAUCHE_EN_COURS;
             break;
         case STATE_TOURNE_GAUCHE_EN_COURS:
-            if(autoControl)
+            if (autoControl)
                 SetNextRobotStateInAutomaticMode();
             break;
 
         case STATE_TOURNE_DROITE:
-            PWMSetSpeedConsigne(-10, moteur_droit);
-            PWMSetSpeedConsigne(10, moteur_gauche);
+            PWMSetSpeedConsigne(-15, moteur_droit);
+            PWMSetSpeedConsigne(15, moteur_gauche);
             stateRobot = STATE_TOURNE_DROITE_EN_COURS;
             break;
         case STATE_TOURNE_DROITE_EN_COURS:
-            if(autoControl)
+            if (autoControl)
                 SetNextRobotStateInAutomaticMode();
             break;
 
@@ -160,14 +160,14 @@ void OperatingSystemLoop(void) {
             //                stateRobot = STATE_TOURNE_SUR_PLACE_DROITE ;
             //            break;
 
-            //        case STATE_TOURNE_SUR_PLACE_GAUCHE:
-            //            PWMSetSpeedConsigne(15, moteur_droit);
-            //            PWMSetSpeedConsigne(-15, moteur_gauche);
-            //            stateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS;
-            //            break;
-            //        case STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS:
-            //            SetNextRobotStateInAutomaticMode();
-            //            break;
+        case STATE_TOURNE_SUR_PLACE_GAUCHE:
+            PWMSetSpeedConsigne(15, moteur_droit);
+            PWMSetSpeedConsigne(-15, moteur_gauche);
+            stateRobot = STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS;
+            break;
+        case STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS:
+            SetNextRobotStateInAutomaticMode();
+            break;
 
         case STATE_TOURNE_SUR_PLACE_DROITE:
             PWMSetSpeedConsigne(-10, moteur_droit);
@@ -175,7 +175,7 @@ void OperatingSystemLoop(void) {
             stateRobot = STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS;
             break;
         case STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS:
-            if(autoControl)
+            if (autoControl)
                 SetNextRobotStateInAutomaticMode();
             break;
 

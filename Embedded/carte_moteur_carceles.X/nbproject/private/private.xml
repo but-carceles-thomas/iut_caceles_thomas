@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/CB_RX1.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/main.c</file>
+            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/ADC.c</file>
             <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/UART_Protocole.c</file>
-            <file>file:/C:/Github/iut_caceles_thomas/Embedded/carte_moteur_carceles.X/UART_Protocole.h</file>
         </group>
     </open-files>
 </project-private>

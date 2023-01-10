@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using MouseKeyboardActivityMonitor.WinApi;
+using MouseKeyboardActivityMonitor;
+using System.Windows.Forms;
 
 namespace RobotVisu
 {
@@ -26,6 +29,7 @@ namespace RobotVisu
         ReliableSerialPort serialPort1;
         DispatcherTimer timerAffichage;
         Robot robot = new Robot();
+        private readonly KeyboardHookListener m_KeyboardHookManager;
 
         public MainWindow()
         {
@@ -38,7 +42,44 @@ namespace RobotVisu
             timerAffichage.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timerAffichage.Tick += TimerAffichage_Tick;
             timerAffichage.Start();
+
+            m_KeyboardHookManager = new KeyboardHookListener(new GlobalHooker());
+            m_KeyboardHookManager.Enabled = true;
+            m_KeyboardHookManager.KeyDown += M_KeyboardHookManager_KeyDown; ;
+
         }
+
+        bool autoControlActivated = false;
+        private void M_KeyboardHookManager_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (autoControlActivated == false)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Left:
+                        UartEncodeAndSendMessage(0x0051, 1, new byte[] {
+                         (byte)StateRobot.STATE_TOURNE_SUR_PLACE_GAUCHE });
+                        break;
+                    case Keys.Right:
+                        UartEncodeAndSendMessage(0x0051, 1, new byte[] {
+                        (byte)StateRobot.STATE_TOURNE_SUR_PLACE_DROITE });
+                        break;
+                    case Keys.Up:
+                        UartEncodeAndSendMessage(0x0051, 1, new byte[] {
+                        (byte)StateRobot.STATE_AVANCE });
+                        break;
+                    case Keys.Down:
+                        UartEncodeAndSendMessage(0x0051, 1, new byte[]
+                        { (byte)StateRobot.STATE_ARRET });
+                        break;
+                    case Keys.PageDown:
+                        UartEncodeAndSendMessage(0x0051, 1, new byte[]
+                      { (byte)StateRobot.STATE_RECULE });
+                        break;
+                }
+            }
+        }
+
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
             //if (robot.receivedText != "")
@@ -47,7 +88,7 @@ namespace RobotVisu
             //    robot.receivedText = "";
             //}
 
-            while(robot.byteListReceived.Count()>0)
+            while (robot.byteListReceived.Count() > 0)
             {
                 var c = robot.byteListReceived.Dequeue();
                 //textBoxReception.Text += "0x" + c.ToString("X2") + " ";
@@ -58,12 +99,12 @@ namespace RobotVisu
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
             //robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
-            foreach(var c in e.Data)
+            foreach (var c in e.Data)
             {
                 robot.byteListReceived.Enqueue(c);
-                
+
             }
-		}
+        }
 
         bool toggle = true;
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
@@ -71,18 +112,8 @@ namespace RobotVisu
             if (toggle)
             {
                 SendMessage();
-               
-            }
-        }
 
-        private void textBoxEmission_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                SendMessage();
             }
-
-           
         }
         void SendMessage()
         {
@@ -91,7 +122,7 @@ namespace RobotVisu
             ///   textBoxReception.Text += "Reçu : " + textBoxEmission.Text;
             textBoxEmission.Text = "";
         }
-        
+
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
             if (toggle)
@@ -148,14 +179,14 @@ namespace RobotVisu
             Checksum ^= (byte)(msgPayloadLength >> 8);
             Checksum ^= (byte)(msgPayloadLength >> 0);
             int i;
-            for (i=0; i < msgPayloadLength; i++)
+            for (i = 0; i < msgPayloadLength; i++)
             {
                 Checksum ^= msgPayload[i];
             }
             return Checksum;
         }
 
-        void UartEncodeAndSendMessage (int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
             byte[] message = new byte[msgPayloadLength + 6];
             int pos = 0;
@@ -253,12 +284,12 @@ namespace RobotVisu
                     }
                     break;
                 case StateReception.Payload:
-                        msgDecodedPayload[msgDecodedPayloadIndex++] = c;
-                        if (msgDecodedPayloadIndex == msgDecodedPayloadLength)
-                        {
-                            rcvState = StateReception.CheckSum;
-                            SuperVision supervision;
-                        }
+                    msgDecodedPayload[msgDecodedPayloadIndex++] = c;
+                    if (msgDecodedPayloadIndex == msgDecodedPayloadLength)
+                    {
+                        rcvState = StateReception.CheckSum;
+                        SuperVision supervision;
+                    }
                     break;
                 case StateReception.CheckSum:
                     byte calculatedChecksum = CalculateChecksum(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
@@ -307,7 +338,7 @@ namespace RobotVisu
 
         void ProcessDecodedMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
-            switch((SuperVision)msgFunction)
+            switch ((SuperVision)msgFunction)
             {
                 case SuperVision.DistanceIR:
                     labelIRGauche.Content = "IR Gauche : " + msgPayload[0].ToString() + " cm";
@@ -324,7 +355,7 @@ namespace RobotVisu
                     switch (msgPayload[0])
                     {
                         case 0:
-                            if(msgPayload[1] == 0)
+                            if (msgPayload[1] == 0)
                                 checkBoxLed1.IsChecked = false;
                             else
                                 checkBoxLed1.IsChecked = true;
@@ -345,13 +376,54 @@ namespace RobotVisu
                     break;
 
                 case SuperVision.RobotState:
-                    int instant = (((int)msgPayload[1])<<24) + (((int)msgPayload[2])<<16)
+                    int instant = (((int)msgPayload[1]) << 24) + (((int)msgPayload[2]) << 16)
                         + (((int)msgPayload[3]) << 8) + ((int)msgPayload[4]);
                     textBoxReception.Text += "\nRobot␣State␣:␣" +
                         ((StateRobot)(msgPayload[0])).ToString() +
                         "␣-␣" + instant.ToString() + "␣ms";
                     break;
             }
+        }
+
+        private void textBoxEmission_KeyUp_1(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SendMessage();
+            }
+        }
+
+        void SetAutoControl(byte state)
+        {
+            byte[] etat = { state };
+            if (state == 0)
+            {
+                autoControlActivated = true;
+            }
+            else
+            {
+                autoControlActivated = false;
+            }
+            UartEncodeAndSendMessage(0x0052, 1, etat);
+        }
+
+        void setRobotState (byte state)
+        {
+            byte[] etat = { state };
+            UartEncodeAndSendMessage(0x0051, 1, etat);
+        }
+
+        byte state = 1 ;
+        private void modeManuel_Checked(object sender, RoutedEventArgs e)
+        {
+            state = 0;
+            SetAutoControl(state);
+        }
+
+        private void modeManuel_Unchecked(object sender, RoutedEventArgs e)
+        {
+            state = 1;
+            SetAutoControl(state);
         }
     }
 }
