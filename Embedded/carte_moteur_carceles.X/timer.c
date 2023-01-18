@@ -83,7 +83,6 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     PWMUpdateSpeed();
     ADC1StartConversionSequence();
-    SetNextRobotStateInAutomaticMode();
 }
 
 // Initialisation d'un 2e timer 16 bits

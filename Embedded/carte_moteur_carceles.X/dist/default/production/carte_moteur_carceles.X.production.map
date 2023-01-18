@@ -125,22 +125,22 @@ Default Scalar Model: Small
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x57c           0x83a  (2106)
-.text                        0x77c               0xdc2          0x14a3  (5283)
-.dinit                      0x153e                0x46            0x69  (105)
-.text                       0x1584                0x36            0x51  (81)
+.text                        0x77c               0xe16          0x1521  (5409)
+.dinit                      0x1592                0x46            0x69  (105)
+.text                       0x15d8                0x36            0x51  (81)
 
-                 Total "program" memory used (bytes):         0x1d97  (7575) 1%
+                 Total "program" memory used (bytes):         0x1e15  (7701) 1%
 
 
 "data" Memory  [Origin = 0x1000, Length = 0xc000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                       0x1000                   0            0x30  (48)
-.ndata                      0x1030                   0             0x2  (2)
-.bss                        0x1032                   0           0x1aa  (426)
+.nbss                       0x1000                   0            0x32  (50)
+.ndata                      0x1032                   0             0x2  (2)
+.bss                        0x1034                   0           0x1aa  (426)
 
-                 Total "data" memory used (bytes):          0x1dc  (476) <1%
+                 Total "data" memory used (bytes):          0x1de  (478) <1%
 
 
 Dynamic Memory Usage
@@ -148,9 +148,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                       0x11dc                              0xbe24  (48676)
+stack                       0x11de                              0xbe22  (48674)
 
-                 Maximum dynamic memory (bytes):         0xbe24  (48676)
+                 Maximum dynamic memory (bytes):         0xbe22  (48674)
 
 Info: Project is using a large data memory model when small data memory model is sufficient.
 
@@ -163,53 +163,55 @@ External Symbols in Data Memory (by address):
                     0x1006                  _ADCValue3
                     0x1008                  _ADCValue4
                     0x100a                  _stateRobot
-                    0x100b                  _nextStateRobot
-                    0x100c                  _ADCResultIndex
-                    0x1016                  _ADCConversionFinishedFlag
-                    0x1018                  _msgDecodedFunction
-                    0x101a                  _msgDecodedPayloadLength
-                    0x101c                  _msgDecodedPayloadIndex
-                    0x101e                  _rcvState
-                    0x1020                  _change
-                    0x1022                  _timestamp
-                    0x1026                  _cbTx1Head
-                    0x1028                  _cbTx1Tail
-                    0x102a                  _isTransmitting
-                    0x102c                  _cbRx1Head
-                    0x102e                  _cbRx1Tail
-                    0x1030                  _acceleration
-                    0x1032                  _cbTx1Buffer
-                    0x10b2                  _cbRx1Buffer
-                    0x1132                  _msgDecodedPayload
-                    0x11b2                  _robotState
+                    0x100b                  _autoControl
+                    0x100c                  _nextStateRobot
+                    0x100e                  _ADCResultIndex
+                    0x1018                  _ADCConversionFinishedFlag
+                    0x101a                  _msgDecodedFunction
+                    0x101c                  _msgDecodedPayloadLength
+                    0x101e                  _msgDecodedPayloadIndex
+                    0x1020                  _rcvState
+                    0x1022                  _change
+                    0x1024                  _timestamp
+                    0x1028                  _cbTx1Head
+                    0x102a                  _cbTx1Tail
+                    0x102c                  _isTransmitting
+                    0x102e                  _cbRx1Head
+                    0x1030                  _cbRx1Tail
+                    0x1032                  _acceleration
+                    0x1034                  _cbTx1Buffer
+                    0x10b4                  _cbRx1Buffer
+                    0x1134                  _msgDecodedPayload
+                    0x11b4                  _robotState
 
 External Symbols in Data Memory (by name):
 
-                    0x1016                  _ADCConversionFinishedFlag
-                    0x100c                  _ADCResultIndex
+                    0x1018                  _ADCConversionFinishedFlag
+                    0x100e                  _ADCResultIndex
                     0x1000                  _ADCValue0
                     0x1002                  _ADCValue1
                     0x1004                  _ADCValue2
                     0x1006                  _ADCValue3
                     0x1008                  _ADCValue4
-                    0x1030                  _acceleration
-                    0x10b2                  _cbRx1Buffer
-                    0x102c                  _cbRx1Head
-                    0x102e                  _cbRx1Tail
-                    0x1032                  _cbTx1Buffer
-                    0x1026                  _cbTx1Head
-                    0x1028                  _cbTx1Tail
-                    0x1020                  _change
-                    0x102a                  _isTransmitting
-                    0x1018                  _msgDecodedFunction
-                    0x1132                  _msgDecodedPayload
-                    0x101c                  _msgDecodedPayloadIndex
-                    0x101a                  _msgDecodedPayloadLength
-                    0x100b                  _nextStateRobot
-                    0x101e                  _rcvState
-                    0x11b2                  _robotState
+                    0x1032                  _acceleration
+                    0x100b                  _autoControl
+                    0x10b4                  _cbRx1Buffer
+                    0x102e                  _cbRx1Head
+                    0x1030                  _cbRx1Tail
+                    0x1034                  _cbTx1Buffer
+                    0x1028                  _cbTx1Head
+                    0x102a                  _cbTx1Tail
+                    0x1022                  _change
+                    0x102c                  _isTransmitting
+                    0x101a                  _msgDecodedFunction
+                    0x1134                  _msgDecodedPayload
+                    0x101e                  _msgDecodedPayloadIndex
+                    0x101c                  _msgDecodedPayloadLength
+                    0x100c                  _nextStateRobot
+                    0x1020                  _rcvState
+                    0x11b4                  _robotState
                     0x100a                  _stateRobot
-                    0x1022                  _timestamp
+                    0x1024                  _timestamp
 
 External Symbols in Program Memory (by address):
 
@@ -227,9 +229,9 @@ External Symbols in Program Memory (by address):
                   0x0003f0                  ___subsf3
                   0x0003f2                  ___addsf3
                   0x0004ac                  ___divsf3
-                  0x000530                  ___eqsf2
                   0x000530                  ___ltsf2
                   0x000530                  ___lesf2
+                  0x000530                  ___eqsf2
                   0x000534                  ___gesf2
                   0x000534                  ___gtsf2
                   0x000538                  ___fixsfsi
@@ -247,91 +249,95 @@ External Symbols in Program Memory (by address):
                   0x0006fe                  ___floatdisf
                   0x00071e                  ___floatundisf
                   0x00077c                  _main
-                  0x000986                  _OperatingSystemLoop
-                  0x000a4e                  _SendStateSupervision
-                  0x000a94                  _SetNextRobotStateInAutomaticMode
-                  0x000bd6                  _InitTimer23
-                  0x000c08                  _SetFreqTimer1
-                  0x000cf0                  _InitTimer1
-                  0x000d06                  _SetFreqTimer4
-                  0x000dee                  _initTimer4
-                  0x000e04                  _UartCalculateChecksum
-                  0x000e64                  _UartEncodeAndSendMessage
-                  0x000f16                  _UartDecodeMessage
-                  0x000fd8                  _InitPWM
-                  0x001010                  _PWMSetSpeedConsigne
-                  0x001038                  _PWMUpdateSpeed
-                  0x00118e                  _Abs
-                  0x0011ba                  _Max
-                  0x0011ea                  _Min
-                  0x00121a                  _LimitToInterval
-                  0x00126c                  _RadianToDegree
-                  0x001284                  _DegreeToRadian
-                  0x00129c                  _SendMessage
-                  0x0012d4                  _CB_TX1_Add
-                  0x0012f4                  _CB_TX1_Get
-                  0x001314                  _SendOne
-                  0x001326                  _CB_TX1_IsTranmitting
-                  0x00132e                  _CB_TX1_RemainingSize
-                  0x00133a                  _CB_TX1_GetDataSize
-                  0x001364                  _InitADC1
-                  0x0013d8                  _ADC1StartConversionSequence
-                  0x0013e0                  _ADCGetResult
-                  0x0013e8                  _ADCIsConversionFinished
-                  0x0013f0                  _ADCClearConversionFinishedFlag
-                  0x0013f8                  _CB_RX1_Add
-                  0x00141e                  _CB_RX1_Get
-                  0x00143e                  _CB_RX1_IsDataAvailable
-                  0x001452                  _CB_RX1_GetDataSize
-                  0x001474                  _CB_RX1_GetRemainingSize
-                  0x001480                  _InitUART
-                  0x0014b0                  _SendMessageDirect
-                  0x0014e8                  _InitOscillator
-                  0x001584                  _InitIO
+                  0x000984                  _OperatingSystemLoop
+                  0x000a8e                  _SetNextRobotStateInAutomaticMode
+                  0x000bce                  _UartCalculateChecksum
+                  0x000c2e                  _UartEncodeAndSendMessage
+                  0x000ce0                  _UartDecodeMessage
+                  0x000db6                  _UartProcessDecodedMessage
+                  0x000de2                  _SetRobotState
+                  0x000df0                  _SetRobotAutoControlState
+                  0x000dfe                  _InitTimer23
+                  0x000e30                  _SetFreqTimer1
+                  0x000f18                  _InitTimer1
+                  0x000f2e                  _SetFreqTimer4
+                  0x001016                  _initTimer4
+                  0x00102c                  _InitPWM
+                  0x001064                  _PWMSetSpeedConsigne
+                  0x00108c                  _PWMUpdateSpeed
+                  0x0011e2                  _Abs
+                  0x00120e                  _Max
+                  0x00123e                  _Min
+                  0x00126e                  _LimitToInterval
+                  0x0012c0                  _RadianToDegree
+                  0x0012d8                  _DegreeToRadian
+                  0x0012f0                  _SendMessage
+                  0x001328                  _CB_TX1_Add
+                  0x001348                  _CB_TX1_Get
+                  0x001368                  _SendOne
+                  0x00137a                  _CB_TX1_IsTranmitting
+                  0x001382                  _CB_TX1_RemainingSize
+                  0x00138e                  _CB_TX1_GetDataSize
+                  0x0013b8                  _InitADC1
+                  0x00142c                  _ADC1StartConversionSequence
+                  0x001434                  _ADCGetResult
+                  0x00143c                  _ADCIsConversionFinished
+                  0x001444                  _ADCClearConversionFinishedFlag
+                  0x00144c                  _CB_RX1_Add
+                  0x001472                  _CB_RX1_Get
+                  0x001492                  _CB_RX1_IsDataAvailable
+                  0x0014a6                  _CB_RX1_GetDataSize
+                  0x0014c8                  _CB_RX1_GetRemainingSize
+                  0x0014d4                  _InitUART
+                  0x001504                  _SendMessageDirect
+                  0x00153c                  _InitOscillator
+                  0x0015d8                  _InitIO
                   0x0557fa                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0013d8                  _ADC1StartConversionSequence
-                  0x0013f0                  _ADCClearConversionFinishedFlag
-                  0x0013e0                  _ADCGetResult
-                  0x0013e8                  _ADCIsConversionFinished
-                  0x00118e                  _Abs
-                  0x0013f8                  _CB_RX1_Add
-                  0x00141e                  _CB_RX1_Get
-                  0x001452                  _CB_RX1_GetDataSize
-                  0x001474                  _CB_RX1_GetRemainingSize
-                  0x00143e                  _CB_RX1_IsDataAvailable
-                  0x0012d4                  _CB_TX1_Add
-                  0x0012f4                  _CB_TX1_Get
-                  0x00133a                  _CB_TX1_GetDataSize
-                  0x001326                  _CB_TX1_IsTranmitting
-                  0x00132e                  _CB_TX1_RemainingSize
-                  0x001284                  _DegreeToRadian
-                  0x001364                  _InitADC1
-                  0x001584                  _InitIO
-                  0x0014e8                  _InitOscillator
-                  0x000fd8                  _InitPWM
-                  0x000cf0                  _InitTimer1
-                  0x000bd6                  _InitTimer23
-                  0x001480                  _InitUART
-                  0x00121a                  _LimitToInterval
-                  0x0011ba                  _Max
-                  0x0011ea                  _Min
-                  0x000986                  _OperatingSystemLoop
-                  0x001010                  _PWMSetSpeedConsigne
-                  0x001038                  _PWMUpdateSpeed
-                  0x00126c                  _RadianToDegree
-                  0x00129c                  _SendMessage
-                  0x0014b0                  _SendMessageDirect
-                  0x001314                  _SendOne
-                  0x000a4e                  _SendStateSupervision
-                  0x000c08                  _SetFreqTimer1
-                  0x000d06                  _SetFreqTimer4
-                  0x000a94                  _SetNextRobotStateInAutomaticMode
-                  0x000e04                  _UartCalculateChecksum
-                  0x000f16                  _UartDecodeMessage
-                  0x000e64                  _UartEncodeAndSendMessage
+                  0x00142c                  _ADC1StartConversionSequence
+                  0x001444                  _ADCClearConversionFinishedFlag
+                  0x001434                  _ADCGetResult
+                  0x00143c                  _ADCIsConversionFinished
+                  0x0011e2                  _Abs
+                  0x00144c                  _CB_RX1_Add
+                  0x001472                  _CB_RX1_Get
+                  0x0014a6                  _CB_RX1_GetDataSize
+                  0x0014c8                  _CB_RX1_GetRemainingSize
+                  0x001492                  _CB_RX1_IsDataAvailable
+                  0x001328                  _CB_TX1_Add
+                  0x001348                  _CB_TX1_Get
+                  0x00138e                  _CB_TX1_GetDataSize
+                  0x00137a                  _CB_TX1_IsTranmitting
+                  0x001382                  _CB_TX1_RemainingSize
+                  0x0012d8                  _DegreeToRadian
+                  0x0013b8                  _InitADC1
+                  0x0015d8                  _InitIO
+                  0x00153c                  _InitOscillator
+                  0x00102c                  _InitPWM
+                  0x000f18                  _InitTimer1
+                  0x000dfe                  _InitTimer23
+                  0x0014d4                  _InitUART
+                  0x00126e                  _LimitToInterval
+                  0x00120e                  _Max
+                  0x00123e                  _Min
+                  0x000984                  _OperatingSystemLoop
+                  0x001064                  _PWMSetSpeedConsigne
+                  0x00108c                  _PWMUpdateSpeed
+                  0x0012c0                  _RadianToDegree
+                  0x0012f0                  _SendMessage
+                  0x001504                  _SendMessageDirect
+                  0x001368                  _SendOne
+                  0x000e30                  _SetFreqTimer1
+                  0x000f2e                  _SetFreqTimer4
+                  0x000a8e                  _SetNextRobotStateInAutomaticMode
+                  0x000df0                  _SetRobotAutoControlState
+                  0x000de2                  _SetRobotState
+                  0x000bce                  _UartCalculateChecksum
+                  0x000ce0                  _UartDecodeMessage
+                  0x000c2e                  _UartEncodeAndSendMessage
+                  0x000db6                  _UartProcessDecodedMessage
                   0x00034e                  __AD1Interrupt
                   0x0003ea                  __DefaultInterrupt
                   0x0557fa                  __FGS.sec
@@ -366,7 +372,7 @@ External Symbols in Program Memory (by name):
                   0x000630                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000dee                  _initTimer4
+                  0x001016                  _initTimer4
                   0x00077c                  _main
 
 Memory Configuration
@@ -531,7 +537,7 @@ __FOSCSEL
 
 __FGS             0x0557fa          0x2
  *(__FGS.sec*)
- __FGS.sec        0x0557fa          0x2 /CW/_FGSÚ*
+ __FGS.sec        0x0557fa          0x2 /CW/_FGS0Â
                   0x0557fa                  __FGS.sec
 
 __FUID0
@@ -549,79 +555,79 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x631f
+.debug_info       0x000000       0x63f0
  *(.debug_info)
- .debug_info      0x000000        0x7ac build/default/production/main.o
- .debug_info      0x0007ac        0x540 build/default/production/ChipConfig.o
- .debug_info      0x000cec        0x8c3 build/default/production/IO.o
- .debug_info      0x0015af        0xefc build/default/production/timer.o
- .debug_info      0x0024ab        0x290 build/default/production/Robot.o
- .debug_info      0x00273b        0x20e build/default/production/ToolBox.o
- .debug_info      0x002949        0xe4f build/default/production/PWM.o
- .debug_info      0x003798       0x13e8 build/default/production/ADC.o
- .debug_info      0x004b80        0x888 build/default/production/UART.o
- .debug_info      0x005408        0x50a build/default/production/CB_TX1.o
- .debug_info      0x005912        0x64e build/default/production/CB_RX1.o
- .debug_info      0x005f60        0x3bf build/default/production/UART_Protocole.o
+ .debug_info      0x000000        0x766 build/default/production/main.o
+ .debug_info      0x000766        0x540 build/default/production/ChipConfig.o
+ .debug_info      0x000ca6        0x8c3 build/default/production/IO.o
+ .debug_info      0x001569        0xefc build/default/production/timer.o
+ .debug_info      0x002465        0x290 build/default/production/Robot.o
+ .debug_info      0x0026f5        0x20e build/default/production/ToolBox.o
+ .debug_info      0x002903        0xe4f build/default/production/PWM.o
+ .debug_info      0x003752       0x13e8 build/default/production/ADC.o
+ .debug_info      0x004b3a        0x888 build/default/production/UART.o
+ .debug_info      0x0053c2        0x50a build/default/production/CB_TX1.o
+ .debug_info      0x0058cc        0x64e build/default/production/CB_RX1.o
+ .debug_info      0x005f1a        0x4d6 build/default/production/UART_Protocole.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0xc61
+.debug_abbrev     0x000000        0xc4c
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x177 build/default/production/main.o
- .debug_abbrev    0x000177         0xc3 build/default/production/ChipConfig.o
- .debug_abbrev    0x00023a         0xc3 build/default/production/IO.o
- .debug_abbrev    0x0002fd        0x133 build/default/production/timer.o
- .debug_abbrev    0x000430         0x8c build/default/production/Robot.o
- .debug_abbrev    0x0004bc         0x6d build/default/production/ToolBox.o
- .debug_abbrev    0x000529        0x167 build/default/production/PWM.o
- .debug_abbrev    0x000690        0x13b build/default/production/ADC.o
- .debug_abbrev    0x0007cb        0x103 build/default/production/UART.o
- .debug_abbrev    0x0008ce        0x152 build/default/production/CB_TX1.o
- .debug_abbrev    0x000a20        0x15e build/default/production/CB_RX1.o
- .debug_abbrev    0x000b7e         0xe3 build/default/production/UART_Protocole.o
+ .debug_abbrev    0x000000        0x162 build/default/production/main.o
+ .debug_abbrev    0x000162         0xc3 build/default/production/ChipConfig.o
+ .debug_abbrev    0x000225         0xc3 build/default/production/IO.o
+ .debug_abbrev    0x0002e8        0x133 build/default/production/timer.o
+ .debug_abbrev    0x00041b         0x8c build/default/production/Robot.o
+ .debug_abbrev    0x0004a7         0x6d build/default/production/ToolBox.o
+ .debug_abbrev    0x000514        0x167 build/default/production/PWM.o
+ .debug_abbrev    0x00067b        0x13b build/default/production/ADC.o
+ .debug_abbrev    0x0007b6        0x103 build/default/production/UART.o
+ .debug_abbrev    0x0008b9        0x152 build/default/production/CB_TX1.o
+ .debug_abbrev    0x000a0b        0x15e build/default/production/CB_RX1.o
+ .debug_abbrev    0x000b69         0xe3 build/default/production/UART_Protocole.o
 
-.debug_line       0x000000        0xcf5
+.debug_line       0x000000        0xd18
  *(.debug_line)
- .debug_line      0x000000        0x1c0 build/default/production/main.o
- .debug_line      0x0001c0        0x11e build/default/production/ChipConfig.o
- .debug_line      0x0002de        0x120 build/default/production/IO.o
- .debug_line      0x0003fe        0x185 build/default/production/timer.o
- .debug_line      0x000583         0x30 build/default/production/Robot.o
- .debug_line      0x0005b3         0x54 build/default/production/ToolBox.o
- .debug_line      0x000607        0x15b build/default/production/PWM.o
- .debug_line      0x000762        0x153 build/default/production/ADC.o
- .debug_line      0x0008b5        0x123 build/default/production/UART.o
- .debug_line      0x0009d8        0x14e build/default/production/CB_TX1.o
- .debug_line      0x000b26        0x146 build/default/production/CB_RX1.o
- .debug_line      0x000c6c         0x89 build/default/production/UART_Protocole.o
+ .debug_line      0x000000        0x1d0 build/default/production/main.o
+ .debug_line      0x0001d0        0x11e build/default/production/ChipConfig.o
+ .debug_line      0x0002ee        0x120 build/default/production/IO.o
+ .debug_line      0x00040e        0x185 build/default/production/timer.o
+ .debug_line      0x000593         0x30 build/default/production/Robot.o
+ .debug_line      0x0005c3         0x54 build/default/production/ToolBox.o
+ .debug_line      0x000617        0x15b build/default/production/PWM.o
+ .debug_line      0x000772        0x153 build/default/production/ADC.o
+ .debug_line      0x0008c5        0x123 build/default/production/UART.o
+ .debug_line      0x0009e8        0x14e build/default/production/CB_TX1.o
+ .debug_line      0x000b36        0x146 build/default/production/CB_RX1.o
+ .debug_line      0x000c7c         0x9c build/default/production/UART_Protocole.o
 
-.debug_frame      0x000000        0x6a8
+.debug_frame      0x000000        0x6dc
  *(.debug_frame)
- .debug_frame     0x000000         0x8c build/default/production/main.o
- .debug_frame     0x00008c         0x2e build/default/production/ChipConfig.o
- .debug_frame     0x0000ba         0x2e build/default/production/IO.o
- .debug_frame     0x0000e8        0x13c build/default/production/timer.o
- .debug_frame     0x000224         0xd0 build/default/production/ToolBox.o
- .debug_frame     0x0002f4         0x6c build/default/production/PWM.o
- .debug_frame     0x000360         0xba build/default/production/ADC.o
- .debug_frame     0x00041a         0x48 build/default/production/UART.o
- .debug_frame     0x000462        0x108 build/default/production/CB_TX1.o
- .debug_frame     0x00056a         0xd4 build/default/production/CB_RX1.o
- .debug_frame     0x00063e         0x6a build/default/production/UART_Protocole.o
+ .debug_frame     0x000000         0x72 build/default/production/main.o
+ .debug_frame     0x000072         0x2e build/default/production/ChipConfig.o
+ .debug_frame     0x0000a0         0x2e build/default/production/IO.o
+ .debug_frame     0x0000ce        0x13c build/default/production/timer.o
+ .debug_frame     0x00020a         0xd0 build/default/production/ToolBox.o
+ .debug_frame     0x0002da         0x6c build/default/production/PWM.o
+ .debug_frame     0x000346         0xba build/default/production/ADC.o
+ .debug_frame     0x000400         0x48 build/default/production/UART.o
+ .debug_frame     0x000448        0x108 build/default/production/CB_TX1.o
+ .debug_frame     0x000550         0xd4 build/default/production/CB_RX1.o
+ .debug_frame     0x000624         0xb8 build/default/production/UART_Protocole.o
 
-.debug_str        0x000000        0x387
+.debug_str        0x000000        0x3aa
  *(.debug_str)
- .debug_str       0x000000         0x73 build/default/production/main.o
- .debug_str       0x000073         0x16 build/default/production/ChipConfig.o
- .debug_str       0x000089         0x34 build/default/production/IO.o
- .debug_str       0x0000bd         0x7f build/default/production/timer.o
- .debug_str       0x00013c          0x6 build/default/production/ToolBox.o
- .debug_str       0x000142         0x55 build/default/production/PWM.o
- .debug_str       0x000197         0xd9 build/default/production/ADC.o
- .debug_str       0x000270         0x27 build/default/production/UART.o
- .debug_str       0x000297         0x38 build/default/production/CB_TX1.o
- .debug_str       0x0002cf         0x33 build/default/production/CB_RX1.o
- .debug_str       0x000302         0x85 build/default/production/UART_Protocole.o
+ .debug_str       0x000000         0x7f build/default/production/main.o
+ .debug_str       0x00007f         0x16 build/default/production/ChipConfig.o
+ .debug_str       0x000095         0x34 build/default/production/IO.o
+ .debug_str       0x0000c9         0x7f build/default/production/timer.o
+ .debug_str       0x000148          0x6 build/default/production/ToolBox.o
+ .debug_str       0x00014e         0x55 build/default/production/PWM.o
+ .debug_str       0x0001a3         0xd9 build/default/production/ADC.o
+ .debug_str       0x00027c         0x27 build/default/production/UART.o
+ .debug_str       0x0002a3         0x38 build/default/production/CB_TX1.o
+ .debug_str       0x0002db         0x33 build/default/production/CB_RX1.o
+ .debug_str       0x00030e         0x9c build/default/production/UART_Protocole.o
 
 .debug_loc
  *(.debug_loc)
@@ -630,32 +636,32 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x625
+                  0x000000        0x669
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0xd9 build/default/production/main.o
+                  0x000000         0xd0 build/default/production/main.o
  .debug_pubnames
-                  0x0000d9         0x25 build/default/production/ChipConfig.o
+                  0x0000d0         0x25 build/default/production/ChipConfig.o
  .debug_pubnames
-                  0x0000fe         0x1d build/default/production/IO.o
+                  0x0000f5         0x1d build/default/production/IO.o
  .debug_pubnames
-                  0x00011b         0xb0 build/default/production/timer.o
+                  0x000112         0xb0 build/default/production/timer.o
  .debug_pubnames
-                  0x0001cb         0x21 build/default/production/Robot.o
+                  0x0001c2         0x21 build/default/production/Robot.o
  .debug_pubnames
-                  0x0001ec         0x64 build/default/production/ToolBox.o
+                  0x0001e3         0x64 build/default/production/ToolBox.o
  .debug_pubnames
-                  0x000250         0x5a build/default/production/PWM.o
+                  0x000247         0x5a build/default/production/PWM.o
  .debug_pubnames
-                  0x0002aa         0xd2 build/default/production/ADC.o
+                  0x0002a1         0xd2 build/default/production/ADC.o
  .debug_pubnames
-                  0x00037c         0x35 build/default/production/UART.o
+                  0x000373         0x35 build/default/production/UART.o
  .debug_pubnames
-                  0x0003b1         0xe7 build/default/production/CB_TX1.o
+                  0x0003a8         0xe7 build/default/production/CB_TX1.o
  .debug_pubnames
-                  0x000498         0xbd build/default/production/CB_RX1.o
+                  0x00048f         0xbd build/default/production/CB_RX1.o
  .debug_pubnames
-                  0x000555         0xd0 build/default/production/UART_Protocole.o
+                  0x00054c        0x11d build/default/production/UART_Protocole.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -2919,7 +2925,7 @@ LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/production/carte_moteur_carceles.X.production.elf elf32-pic30)
-LOAD /CW/_FGSÚ*
+LOAD /CW/_FGS0Â
 LOAD default_isr
 LOAD data_init
 
@@ -3011,47 +3017,48 @@ __c30_signature
  __c30_signature
                   0x0008e6          0x6 c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\libm-elf.a(floatundisf.epeo)
 
-.nbss               0x1000         0x30
- .nbss              0x1000          0xc build/default/production/main.o
+.nbss               0x1000         0x32
+ .nbss              0x1000          0xe build/default/production/main.o
                     0x1000                  _ADCValue0
                     0x1002                  _ADCValue1
                     0x1004                  _ADCValue2
                     0x1006                  _ADCValue3
                     0x1008                  _ADCValue4
                     0x100a                  _stateRobot
-                    0x100b                  _nextStateRobot
- .nbss              0x100c          0xc build/default/production/ADC.o
-                    0x100c                  _ADCResultIndex
-                    0x1016                  _ADCConversionFinishedFlag
- .nbss              0x1018          0x8 build/default/production/UART_Protocole.o
-                    0x1018                  _msgDecodedFunction
-                    0x101a                  _msgDecodedPayloadLength
-                    0x101c                  _msgDecodedPayloadIndex
-                    0x101e                  _rcvState
- .nbss              0x1020          0x6 build/default/production/timer.o
-                    0x1020                  _change
-                    0x1022                  _timestamp
- .nbss              0x1026          0x6 build/default/production/CB_TX1.o
-                    0x1026                  _cbTx1Head
-                    0x1028                  _cbTx1Tail
-                    0x102a                  _isTransmitting
- .nbss              0x102c          0x4 build/default/production/CB_RX1.o
-                    0x102c                  _cbRx1Head
-                    0x102e                  _cbRx1Tail
+                    0x100b                  _autoControl
+                    0x100c                  _nextStateRobot
+ .nbss              0x100e          0xc build/default/production/ADC.o
+                    0x100e                  _ADCResultIndex
+                    0x1018                  _ADCConversionFinishedFlag
+ .nbss              0x101a          0x8 build/default/production/UART_Protocole.o
+                    0x101a                  _msgDecodedFunction
+                    0x101c                  _msgDecodedPayloadLength
+                    0x101e                  _msgDecodedPayloadIndex
+                    0x1020                  _rcvState
+ .nbss              0x1022          0x6 build/default/production/timer.o
+                    0x1022                  _change
+                    0x1024                  _timestamp
+ .nbss              0x1028          0x6 build/default/production/CB_TX1.o
+                    0x1028                  _cbTx1Head
+                    0x102a                  _cbTx1Tail
+                    0x102c                  _isTransmitting
+ .nbss              0x102e          0x4 build/default/production/CB_RX1.o
+                    0x102e                  _cbRx1Head
+                    0x1030                  _cbRx1Tail
 
-.ndata              0x1030          0x2
- .ndata             0x1030          0x2 build/default/production/PWM.o
-                    0x1030                  _acceleration
+.ndata              0x1032          0x2
+ .ndata             0x1032          0x2 build/default/production/PWM.o
+                    0x1032                  _acceleration
 
-.bss                0x1032        0x1aa
- .bss               0x1032         0x80 build/default/production/CB_TX1.o
-                    0x1032                  _cbTx1Buffer
- .bss               0x10b2         0x80 build/default/production/CB_RX1.o
-                    0x10b2                  _cbRx1Buffer
- .bss               0x1132         0x80 build/default/production/UART_Protocole.o
-                    0x1132                  _msgDecodedPayload
- .bss               0x11b2         0x2a build/default/production/Robot.o
-                    0x11b2                  _robotState
+.bss                0x1034        0x1aa
+ .bss               0x1034         0x80 build/default/production/CB_TX1.o
+                    0x1034                  _cbTx1Buffer
+ .bss               0x10b4         0x80 build/default/production/CB_RX1.o
+                    0x10b4                  _cbRx1Buffer
+ .bss               0x1134         0x80 build/default/production/UART_Protocole.o
+                    0x1134                  _msgDecodedPayload
+ .bss               0x11b4         0x2a build/default/production/Robot.o
+                    0x11b4                  _robotState
 
 .config_IESO      0x0557f8          0x2
  .config_IESO     0x0557f8          0x2 build/default/production/ChipConfig.o
@@ -3101,62 +3108,64 @@ __c30_signature
  .ivt._U1RXInterrupt
                   0x00002a          0x2 build/default/production/CB_RX1.o
 
-.text             0x00077c        0xdc2
- .text            0x00077c        0x45a build/default/production/main.o
+.text             0x00077c        0xe16
+ .text            0x00077c        0x452 build/default/production/main.o
                   0x00077c                  _main
-                  0x000986                  _OperatingSystemLoop
-                  0x000a4e                  _SendStateSupervision
-                  0x000a94                  _SetNextRobotStateInAutomaticMode
- .text            0x000bd6        0x22e build/default/production/timer.o
-                  0x000bd6                  _InitTimer23
-                  0x000c08                  _SetFreqTimer1
-                  0x000cf0                  _InitTimer1
-                  0x000d06                  _SetFreqTimer4
-                  0x000dee                  _initTimer4
- .text            0x000e04        0x1d4 build/default/production/UART_Protocole.o
-                  0x000e04                  _UartCalculateChecksum
-                  0x000e64                  _UartEncodeAndSendMessage
-                  0x000f16                  _UartDecodeMessage
- .text            0x000fd8        0x1b6 build/default/production/PWM.o
-                  0x000fd8                  _InitPWM
-                  0x001010                  _PWMSetSpeedConsigne
-                  0x001038                  _PWMUpdateSpeed
- .text            0x00118e        0x10e build/default/production/ToolBox.o
-                  0x00118e                  _Abs
-                  0x0011ba                  _Max
-                  0x0011ea                  _Min
-                  0x00121a                  _LimitToInterval
-                  0x00126c                  _RadianToDegree
-                  0x001284                  _DegreeToRadian
- .text            0x00129c         0xc8 build/default/production/CB_TX1.o
-                  0x00129c                  _SendMessage
-                  0x0012d4                  _CB_TX1_Add
-                  0x0012f4                  _CB_TX1_Get
-                  0x001314                  _SendOne
-                  0x001326                  _CB_TX1_IsTranmitting
-                  0x00132e                  _CB_TX1_RemainingSize
-                  0x00133a                  _CB_TX1_GetDataSize
- .text            0x001364         0x94 build/default/production/ADC.o
-                  0x001364                  _InitADC1
-                  0x0013d8                  _ADC1StartConversionSequence
-                  0x0013e0                  _ADCGetResult
-                  0x0013e8                  _ADCIsConversionFinished
-                  0x0013f0                  _ADCClearConversionFinishedFlag
- .text            0x0013f8         0x88 build/default/production/CB_RX1.o
-                  0x0013f8                  _CB_RX1_Add
-                  0x00141e                  _CB_RX1_Get
-                  0x00143e                  _CB_RX1_IsDataAvailable
-                  0x001452                  _CB_RX1_GetDataSize
-                  0x001474                  _CB_RX1_GetRemainingSize
- .text            0x001480         0x68 build/default/production/UART.o
-                  0x001480                  _InitUART
-                  0x0014b0                  _SendMessageDirect
- .text            0x0014e8         0x56 build/default/production/ChipConfig.o
-                  0x0014e8                  _InitOscillator
+                  0x000984                  _OperatingSystemLoop
+                  0x000a8e                  _SetNextRobotStateInAutomaticMode
+ .text            0x000bce        0x230 build/default/production/UART_Protocole.o
+                  0x000bce                  _UartCalculateChecksum
+                  0x000c2e                  _UartEncodeAndSendMessage
+                  0x000ce0                  _UartDecodeMessage
+                  0x000db6                  _UartProcessDecodedMessage
+                  0x000de2                  _SetRobotState
+                  0x000df0                  _SetRobotAutoControlState
+ .text            0x000dfe        0x22e build/default/production/timer.o
+                  0x000dfe                  _InitTimer23
+                  0x000e30                  _SetFreqTimer1
+                  0x000f18                  _InitTimer1
+                  0x000f2e                  _SetFreqTimer4
+                  0x001016                  _initTimer4
+ .text            0x00102c        0x1b6 build/default/production/PWM.o
+                  0x00102c                  _InitPWM
+                  0x001064                  _PWMSetSpeedConsigne
+                  0x00108c                  _PWMUpdateSpeed
+ .text            0x0011e2        0x10e build/default/production/ToolBox.o
+                  0x0011e2                  _Abs
+                  0x00120e                  _Max
+                  0x00123e                  _Min
+                  0x00126e                  _LimitToInterval
+                  0x0012c0                  _RadianToDegree
+                  0x0012d8                  _DegreeToRadian
+ .text            0x0012f0         0xc8 build/default/production/CB_TX1.o
+                  0x0012f0                  _SendMessage
+                  0x001328                  _CB_TX1_Add
+                  0x001348                  _CB_TX1_Get
+                  0x001368                  _SendOne
+                  0x00137a                  _CB_TX1_IsTranmitting
+                  0x001382                  _CB_TX1_RemainingSize
+                  0x00138e                  _CB_TX1_GetDataSize
+ .text            0x0013b8         0x94 build/default/production/ADC.o
+                  0x0013b8                  _InitADC1
+                  0x00142c                  _ADC1StartConversionSequence
+                  0x001434                  _ADCGetResult
+                  0x00143c                  _ADCIsConversionFinished
+                  0x001444                  _ADCClearConversionFinishedFlag
+ .text            0x00144c         0x88 build/default/production/CB_RX1.o
+                  0x00144c                  _CB_RX1_Add
+                  0x001472                  _CB_RX1_Get
+                  0x001492                  _CB_RX1_IsDataAvailable
+                  0x0014a6                  _CB_RX1_GetDataSize
+                  0x0014c8                  _CB_RX1_GetRemainingSize
+ .text            0x0014d4         0x68 build/default/production/UART.o
+                  0x0014d4                  _InitUART
+                  0x001504                  _SendMessageDirect
+ .text            0x00153c         0x56 build/default/production/ChipConfig.o
+                  0x00153c                  _InitOscillator
 
-.dinit            0x00153e         0x46
- .dinit           0x00153e         0x46 data_init
+.dinit            0x001592         0x46
+ .dinit           0x001592         0x46 data_init
 
-.text             0x001584         0x36
- .text            0x001584         0x36 build/default/production/IO.o
-                  0x001584                  _InitIO
+.text             0x0015d8         0x36
+ .text            0x0015d8         0x36 build/default/production/IO.o
+                  0x0015d8                  _InitIO

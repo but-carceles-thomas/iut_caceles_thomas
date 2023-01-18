@@ -70,11 +70,11 @@ namespace RobotVisu
                         break;
                     case Keys.Down:
                         UartEncodeAndSendMessage(0x0051, 1, new byte[]
-                        { (byte)StateRobot.STATE_ARRET });
+                        { (byte)StateRobot.STATE_RECULE });
                         break;
                     case Keys.PageDown:
                         UartEncodeAndSendMessage(0x0051, 1, new byte[]
-                      { (byte)StateRobot.STATE_RECULE });
+                      { (byte)StateRobot.STATE_ARRET });
                         break;
                 }
             }
@@ -398,11 +398,11 @@ namespace RobotVisu
             byte[] etat = { state };
             if (state == 0)
             {
-                autoControlActivated = true;
+                autoControlActivated = false;
             }
             else
             {
-                autoControlActivated = false;
+                autoControlActivated = true;
             }
             UartEncodeAndSendMessage(0x0052, 1, etat);
         }
