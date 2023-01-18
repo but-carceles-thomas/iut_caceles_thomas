@@ -49,18 +49,23 @@ void InitIO() {
     _TRISB15 = 0;
     _TRISC6 = 0;
     _TRISC7 = 0;
-    
+
     _RP36R = 0b00001; //Remappe la sortie Tx1 vers RP 36
+
+    _QEA2R = 97; //assign QEI A to pin RP97
+    _QEB2R = 96; //assign QEI B to pin RP96
+    _QEA1R = 70; //assign QEI A to pin RP70
+    _QEB1R = 69; //assign QEI B to pin RP69
 
 
     //********** Configuration des entrées : _TRISxx = 1 ********************************   
     _U1RXR = 24; //Remappe la RP sur l'entré Rx1
-    
-    
+
+
     //_TRISB1 = 1
     //_TRISC0 = 1;
     //_TRISC11 = 1;
-   // _TRISG9 = 1;
-   // _TRISE15 = 1;
-    
+    // _TRISG9 = 1;
+    // _TRISE15 = 1;
+
 }
