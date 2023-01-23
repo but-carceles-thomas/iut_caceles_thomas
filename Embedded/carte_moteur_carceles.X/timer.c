@@ -4,6 +4,8 @@
 #include "PWM.h"
 #include "adc.h"
 #include "main.h"
+#include "QEI.h"
+//#include "Utilities.h"
 
 unsigned char change = 0;
 unsigned long timestamp;
@@ -32,15 +34,15 @@ void InitTimer23(void) {
 void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void) {
     IFS0bits.T3IF = 0; // Clear Timer3 Interrupt Flag
     //LED_ORANGE = !LED_ORANGE;
-   // if (change == 0) {
-      //  PWMSetSpeedConsigne(-20, moteur_gauche);
-       // PWMSetSpeedConsigne(20, moteur_droit);
-       // change = 1;
-   // } else if (change == 1) {
-     //   PWMSetSpeedConsigne(-20, moteur_droit);
+    // if (change == 0) {
+    //  PWMSetSpeedConsigne(-20, moteur_gauche);
+    // PWMSetSpeedConsigne(20, moteur_droit);
+    // change = 1;
+    // } else if (change == 1) {
+    //   PWMSetSpeedConsigne(-20, moteur_droit);
     //    PWMSetSpeedConsigne(20, moteur_gauche);
     //    change = 0;
-   // }
+    // }
 }
 
 
@@ -64,7 +66,7 @@ void SetFreqTimer1(float freq) {
 }
 
 void InitTimer1(void) {
-    SetFreqTimer1(100);
+    SetFreqTimer1(250);
     //Timer1 pour horodater les mesures (1ms)
     T1CONbits.TON = 0; // Disable Timer
     T1CONbits.TCS = 0; //clock source = internal clock
@@ -78,11 +80,14 @@ void InitTimer1(void) {
 }
 
 //Interruption du timer 1
-
+int QeiSendCounter=0;
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     PWMUpdateSpeed();
-    ADC1StartConversionSequence();
+    ADC1StartConversionSequence();    
+    QEIUpdateData();
+    if(QeiSendCounter++%25==0)
+        SendPositionData();
 }
 
 // Initialisation d'un 2e timer 16 bits
