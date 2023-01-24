@@ -51,22 +51,19 @@ void QEIUpdateData() {
     //attention àremultiplier par la éfrquence dé?chantillonnage
     robotState.vitesseDroitFromOdometry = delta_d*FREQ_ECH_QEI;
     robotState.vitesseGaucheFromOdometry = delta_g*FREQ_ECH_QEI;
-    robotState.vitesseLineaireFromOdometry =
-            (robotState.vitesseDroitFromOdometry + robotState.vitesseGaucheFromOdometry) / 2;
-    robotState.vitesseAngulaireFromOdometry = delta_theta*FREQ_ECH_QEI;
+    robotState.vitesseLineaireFromOdometry = (robotState.vitesseDroitFromOdometry + robotState.vitesseGaucheFromOdometry) / 2;
+    robotState.vitesseAngulaireFromOdometry = (robotState.vitesseDroitFromOdometry - robotState.vitesseGaucheFromOdometry) / DISTROUES;
 
     //Mise àjour du positionnement terrain à t-1
     robotState.xPosFromOdometry_1 = robotState.xPosFromOdometry;
     robotState.yPosFromOdometry_1 = robotState.yPosFromOdometry;
     robotState.angleRadianFromOdometry_1 = robotState.angleRadianFromOdometry;
 
-    double VlinRobot = ((robotState.vitesseDroitFromOdometry + robotState.vitesseGaucheFromOdometry) / 2) * FREQ_ECH_QEI;
-    double VAngRobot = ((robotState.vitesseDroitFromOdometry - robotState.vitesseGaucheFromOdometry) / DISTROUES) * FREQ_ECH_QEI;
 
     //Calcul des positions dans le referentiel du terrain
-    robotState.xPosFromOdometry = robotState.xPosFromOdometry_1 + VlinRobot * cos(VAngRobot);
-    robotState.yPosFromOdometry = robotState.yPosFromOdometry_1 + VlinRobot * sin(VAngRobot);
-    robotState.angleRadianFromOdometry = robotState.angleRadianFromOdometry_1 + VAngRobot;
+    robotState.xPosFromOdometry = robotState.xPosFromOdometry_1 + robotState.vitesseLineaireFromOdometry / FREQ_ECH_QEI * cos(robotState.angleRadianFromOdometry);
+    robotState.yPosFromOdometry = robotState.yPosFromOdometry_1 + robotState.vitesseLineaireFromOdometry / FREQ_ECH_QEI * sin(robotState.angleRadianFromOdometry);
+    robotState.angleRadianFromOdometry = robotState.angleRadianFromOdometry_1 + robotState.vitesseAngulaireFromOdometry / FREQ_ECH_QEI;
     if (robotState.angleRadianFromOdometry > PI)
         robotState.angleRadianFromOdometry -= 2 * PI;
     if (robotState.angleRadianFromOdometry < -PI)

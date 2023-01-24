@@ -1,5 +1,4 @@
 ﻿using ExtendedSerialPort;
-using Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -207,25 +206,25 @@ namespace RobotVisu
         }
 
 
-        void UartEncodeAndSendMessageWithError(int msgFunction, int msgPayloadLength, byte[] msgPayload)
-        {
-            byte[] message = new byte[msgPayloadLength + 6];
-            int pos = 0;
-            message[pos++] = 0xFE;
-            message[pos++] = (byte)(msgFunction >> 8);
-            message[pos++] = (byte)(msgFunction >> 0);
-            message[pos++] = (byte)(msgPayloadLength >> 8);
-            message[pos++] = (byte)(msgPayloadLength >> 0);
+        //void UartEncodeAndSendMessageWithError(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        //{
+        //    byte[] message = new byte[msgPayloadLength + 6];
+        //    int pos = 0;
+        //    message[pos++] = 0xFE;
+        //    message[pos++] = (byte)(msgFunction >> 8);
+        //    message[pos++] = (byte)(msgFunction >> 0);
+        //    message[pos++] = (byte)(msgPayloadLength >> 8);
+        //    message[pos++] = (byte)(msgPayloadLength >> 0);
 
-            int i;
-            for (i = 0; i < msgPayloadLength; i++)
-            {
-                message[pos++] = msgPayload[i];
-            }
-            message[pos++] = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
-            message[3] = 0x23;
-            serialPort1.Write(message, 0, pos);
-        }
+        //    int i;
+        //    for (i = 0; i < msgPayloadLength; i++)
+        //    {
+        //        message[pos++] = msgPayload[i];
+        //    }
+        //    message[pos++] = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
+        //    message[3] = 0x23;
+        //    serialPort1.Write(message, 0, pos);
+        //}
 
         public enum StateReception
         {
@@ -314,7 +313,8 @@ namespace RobotVisu
             ReglageLED = 0x0020,
             DistanceIR = 0x0030,
             ConsigneVitesse = 0x0040,
-            RobotState = 0x0050
+            RobotState = 0x0050,
+            PositionData = 0x0061
         }
 
         public enum StateRobot
@@ -383,6 +383,24 @@ namespace RobotVisu
                         ((StateRobot)(msgPayload[0])).ToString() +
                         "␣-␣" + instant.ToString() + "␣ms";
                     break;
+
+                case SuperVision.PositionData:
+
+                    robot.positionXOdo = BitConverter.ToSingle(msgPayload, 4);
+                    textBoxReception.Text = "\nposition x : " + robot.positionXOdo;
+
+                    robot.positionYOdo = BitConverter.ToSingle(msgPayload, 8);
+                    textBoxReception.Text += "\nposition y : " + robot.positionYOdo;
+
+                    robot.angleRadOdo = BitConverter.ToSingle(msgPayload, 12);
+                    textBoxReception.Text += "\nangle : " + robot.angleRadOdo;
+
+                    robot.vitLinéaireOdo = BitConverter.ToSingle(msgPayload, 16);
+                    textBoxReception.Text += "\nvit.linéaire : " + robot.vitLinéaireOdo;
+
+                    robot.vitAngulaireOdo = BitConverter.ToSingle(msgPayload, 20);
+                    textBoxReception.Text += "\nvit.angulaire : " + robot.vitAngulaireOdo;
+                    break;
             }
         }
 
@@ -408,13 +426,13 @@ namespace RobotVisu
             UartEncodeAndSendMessage(0x0052, 1, etat);
         }
 
-        void setRobotState (byte state)
+        void setRobotState(byte state)
         {
             byte[] etat = { state };
             UartEncodeAndSendMessage(0x0051, 1, etat);
         }
 
-        byte state = 1 ;
+        byte state = 1;
         private void modeManuel_Checked(object sender, RoutedEventArgs e)
         {
             state = 0;
