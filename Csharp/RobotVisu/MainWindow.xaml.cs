@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using MouseKeyboardActivityMonitor.WinApi;
 using MouseKeyboardActivityMonitor;
 using System.Windows.Forms;
+using WpfOscilloscopeControl;
 
 namespace RobotVisu
 {
@@ -47,6 +48,8 @@ namespace RobotVisu
             m_KeyboardHookManager.Enabled = true;
             m_KeyboardHookManager.KeyDown += M_KeyboardHookManager_KeyDown; ;
 
+            oscilloSpeed.AddOrUpdateLine(1, 200, "Ligne1");
+            oscilloSpeed.ChangeLineColor(1, Color.FromArgb(0xFF, 0x00, 0xFF, 0x00));
         }
 
         bool autoControlActivated = false;
@@ -433,6 +436,7 @@ namespace RobotVisu
         }
 
         byte state = 1;
+
         private void modeManuel_Checked(object sender, RoutedEventArgs e)
         {
             state = 0;

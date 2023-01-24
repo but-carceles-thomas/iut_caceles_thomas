@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RobotVisu"
+        xmlns:oscillo="clr-namespace:WpfOscilloscopeControl;assembly=WpfOscilloscopeControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0"/>
+            <RowDefinition Height="100"/>
             <RowDefinition/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -29,8 +30,7 @@
         </GroupBox>
         <Button x:Name="buttonEnvoyer" Content="Envoyer" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Stretch" Width="100" Background="#FF2280DC" Click="buttonEnvoyer_Click"/>
         <Button x:Name="buttonClear" Content="Clear" Grid.Column="3" HorizontalAlignment="Right" Margin="0" Grid.Row="2" VerticalAlignment="Stretch" Width="100" Background="#FFFF0247" Click="buttonClear_Click"/>
-        <Button x:Name="buttontest"  Content="test" Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Stretch" Width="75" Click="buttontest_Click" Background="#FF7C4F83"/>
-        <Button x:Name="buttontestFalse"  Content="test" Grid.Column="2" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Stretch" Width="75" Click="buttontestFalse_Click" Background="#FF885E8F"/>
+        <Button x:Name="buttontest"  Content="test" Grid.Column="3" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Stretch" Width="75" Click="buttontest_Click" Background="White"/>
         <CheckBox x:Name="CheckBoxLed2" Content="Led2" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="3" VerticalAlignment="Stretch"/>
         <CheckBox x:Name="checkBoxLed1" Content="Led1" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Stretch"/>
         <CheckBox x:Name="checkBoxLed3" Content="Led3" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="4" VerticalAlignment="Stretch"/>
@@ -40,5 +40,6 @@
         <Label x:Name="labelVitesseGauche" Content="Vitesse Gauche :" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Grid.Row="3" VerticalAlignment="Stretch"/>
         <Label x:Name="labelVitesseDroit" Content="Vitesse Droit :" Grid.Column="3" HorizontalAlignment="Left" Margin="0" Grid.Row="4" VerticalAlignment="Stretch"/>
         <CheckBox x:Name="modeManuel" Content="modeManuel" Grid.Column="3" HorizontalAlignment="Right" Margin="0" Grid.Row="4" VerticalAlignment="Stretch" Checked="modeManuel_Checked" Unchecked="modeManuel_Unchecked"/>
+        <oscillo:WpfOscilloscope x:Name="oscilloSpeed" Grid.ColumnSpan="5"/>
     </Grid>
 </Window>
