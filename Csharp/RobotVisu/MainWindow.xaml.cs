@@ -50,6 +50,7 @@ namespace RobotVisu
 
             oscilloSpeed.AddOrUpdateLine(1, 200, "Ligne1");
             oscilloSpeed.ChangeLineColor(1, Color.FromArgb(0xFF, 0x00, 0xFF, 0x00));
+            oscilloSpeed.AddPointToLine(1, 2, 10);
         }
 
         bool autoControlActivated = false;
