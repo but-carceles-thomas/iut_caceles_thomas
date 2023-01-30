@@ -16,7 +16,7 @@ namespace WpfOscilloscopeControl
     /// </summary>
     public partial class WpfOscilloscope : UserControl
     {
-        public bool isDisplayActivated = false;
+        public bool isDisplayActivated = true;
         ConcurrentDictionary<int, XyDataSeries<double, double>> lineDictionary = new ConcurrentDictionary<int, XyDataSeries<double, double>>();
         ConcurrentDictionary<int, ConcurrentQueue<Point>> lineDataDictionary = new ConcurrentDictionary< int, ConcurrentQueue<Point>>();
         Dictionary<int, bool> useDisplayTimerRenderingDictionary = new Dictionary<int, bool>();

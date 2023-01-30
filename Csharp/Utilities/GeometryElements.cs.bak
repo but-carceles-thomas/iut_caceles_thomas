@@ -2,19 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Windows.Shapes;
 using ZeroFormatter;
 
 namespace Utilities
 {
-    [DataContract]
     public class PointD
     {
-        [DataMember]
         public double X;// { get; set; }
-        [DataMember]
         public double Y;// { get; set; }
         public PointD(double x, double y)
         {
@@ -37,43 +32,12 @@ namespace Utilities
         }
     }
 
-    [ZeroFormattable]
     public class SegmentD
     {
-
-        [Index(0)]
-        virtual public double X1 { get; set; }
-
-        [Index(1)]
-        virtual public double Y1 { get; set; }
-
-        [Index(2)]
-        virtual public double X2 { get; set; }
-
-        [Index(3)]
-        virtual public double Y2 { get; set; }
-
-        [IgnoreFormat]
-        public PointD PtDebut
-        {
-            get { return new PointD(X1, Y1); }
-            private set { X1 = PtDebut.X; Y1 = PtDebut.Y; }
-        }
-
-        [IgnoreFormat]
-        public PointD PtFin
-        {
-            get { return new PointD(X2, Y2); }
-            private set { X2 = PtFin.X; Y2 = PtFin.Y; }
-        }
-
-        [IgnoreFormat]
-        public double Angle
-        {
-            get { return Math.Atan2(Y2 - Y1, X2 - X1); }
-            //private set { }
-        }
-
+        public double X1 { get; set; }
+        public double Y1 { get; set; }
+        public double X2 { get; set; }
+        public double Y2 { get; set; }
         public SegmentD(PointD ptDebut, PointD ptFin)
         {
             X1 = ptDebut.X;
@@ -82,8 +46,21 @@ namespace Utilities
             Y2 = ptFin.Y;
         }
 
-        public SegmentD()
+        public PointD PtDebut
         {
+            get { return new PointD(X1, Y1); }
+            private set { X1 = PtDebut.X; Y1 = PtDebut.Y; }
+        }
+        public PointD PtFin
+        {
+            get { return new PointD(X2, Y2); }
+            private set { X2 = PtFin.X; Y2 = PtFin.Y; }
+        }
+
+        public double Angle
+        {
+            get { return Math.Atan2(Y2 - Y1, X2 - X1); }
+            //private set { }
         }
     }
 
@@ -220,10 +197,6 @@ namespace Utilities
         {
 
         }
-        public PolarPoint ToPolarPoint()
-        {
-            return new PolarPoint(Angle, Distance);
-        }
     }
 
     public class PolarPointRssiExtended
@@ -253,7 +226,7 @@ namespace Utilities
         }
     }
 
-    [ZeroFormattable][Serializable]
+    [ZeroFormattable]
     public class Location
     {
         [Index(0)]
@@ -282,15 +255,6 @@ namespace Utilities
             Vy = vy;
             Vtheta = vtheta;
         }
-        public Location(double x, double y, double theta)
-        {
-            X = x;
-            Y = y;
-            Theta = theta;
-            Vx = 0;
-            Vy = 0;
-            Vtheta = 0;
-        }
 
         public PointD ToPointD()
         {
@@ -316,14 +280,12 @@ namespace Utilities
         public virtual double Vtheta { get; set; }
         [Index(6)]
         public virtual ObjectType Type { get; set; }
-        [Index(7)]
-        public virtual int Id { get; set; }
 
         public LocationExtended()
         {
 
         }
-        public LocationExtended(double x, double y, double theta, double vx, double vy, double vtheta, ObjectType type, int id=0)
+        public LocationExtended(double x, double y, double theta, double vx, double vy, double vtheta, ObjectType type)
         {
             X = x;
             Y = y;
@@ -332,7 +294,6 @@ namespace Utilities
             Vy = vy;
             Vtheta = vtheta;
             Type = type;
-            Id = id;
         }
         public LocationExtended(double x, double y, double theta, ObjectType type)
         {
@@ -358,86 +319,31 @@ namespace Utilities
         {
             return new PointD(X, Y);
         }
-        public Location ToLocation()
-        {
-            return new Location(X, Y, Theta, Vx, Vy, Vtheta);
-        }
-    }
-    public class PotentialLocationFromBalises
-    {
-        public Location location;
-        public PointD Balise1Theorique;
-        public PointD Balise2Theorique;
-        public PointD Balise3Theorique;
-        public double DistanceBalise1;
-        public double AngleBalise1;
-        public double DistanceBalise2;
-        public double AngleBalise2;
-        public double DistanceBalise3;
-        public double AngleBalise3;
-        public double Score;
-
-        public PotentialLocationFromBalises()
-        {
-            location = new Location();
-        }
-    }
-
-    public class PolygonD
-    {
-        public List<PointD> Points = new List<PointD>();
     }
 
     public class PolygonExtended
     {
-        public PolygonD polygon = new PolygonD();
+        public Polygon polygon = new Polygon();
         public float borderWidth = 1;
         public System.Drawing.Color borderColor = System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF);
         public double borderOpacity = 1;
         public double[] borderDashPattern = new double[] { 1.0 };
         public System.Drawing.Color backgroundColor = System.Drawing.Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF);
-        public PolygonExtended Copy()
-        {
-            PolygonExtended polygonCopy = new PolygonExtended();
-            polygonCopy.polygon = polygon;
-            polygonCopy.borderWidth = borderWidth;
-            polygonCopy.borderOpacity = borderOpacity;
-            polygonCopy.borderDashPattern = borderDashPattern;
-            polygonCopy.borderColor = borderColor;
-            polygonCopy.backgroundColor = backgroundColor;
-            return polygonCopy;
-        }
     }
 
-    [ZeroFormattable]
     public class SegmentExtended
     {
-        [Index(0)]
-        public virtual SegmentD Segment { get; set; }
-
-        [Index(1)]
-        public virtual double Width { get; set; }
-
-        [IgnoreFormat]
-        public virtual System.Drawing.Color Color { get; set; } 
-
-        [Index(3)]
-        public virtual double Opacity { get; set; }
-
-        [Index(4)]
-        public virtual double[] DashPattern { get; set; }
+        public SegmentD Segment;
+        public double Width = 10;
+        public System.Drawing.Color Color = System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF);
+        public double Opacity = 1;
+        public double[] DashPattern = new double[] { 1.0 };
 
         public SegmentExtended(PointD ptDebut, PointD ptFin, System.Drawing.Color color, double width = 1)
         {
             Segment = new SegmentD(ptDebut, ptFin);
             Color = color;
             Width = width;
-            Opacity = 1;
-            DashPattern = new double[] { 1.0 };
-        }
-        public SegmentExtended()
-        {
-
         }
     }
 
@@ -449,18 +355,16 @@ namespace Utilities
         //public double displayWidth=1;
     }
 
-    public class CircularZone
+    public class Zone
     {
         public PointD center;
         public double radius; //Le rayon correspond à la taille la zone - à noter que l'intensité diminuera avec le rayon
-        public double centerStrength; //La force correspond à l'intensité du point central de la zone
-        public double radialStrength; //La force correspond à l'intensité du point central de la zone
-        public CircularZone(PointD center, double radius, double centerStrength = 1.0, double radialStrength = 0.0)
+        public double strength; //La force correspond à l'intensité du point central de la zone
+        public Zone(PointD center, double radius, double strength)
         {
             this.radius = radius;
             this.center = center;
-            this.centerStrength = centerStrength ;
-            this.radialStrength = radialStrength ;
+            this.strength = strength;
         }
     }
     public class RectangleZone
@@ -474,79 +378,6 @@ namespace Utilities
         }
     }
 
-    public class RectanglePointZone : PolygonConvexPointZone
-    {
-        /// ATTENTION : dans cette classe l'ordre des points est très important !
-        /// Les points doivent être déclarés dans le sens trigonométrique
-        /// 
-        //public List<PointD> ptList = new List<PointD>();
-        //public double strength; //La force correspond à l'intensité du point central de la zone
-
-        public RectanglePointZone(PointD p1, PointD p2, PointD p3, PointD p4, double strength = 1) : base(new List<PointD> { p1, p2, p3, p4 }, strength)
-        {
-            this.ptList.Add(p1);
-            this.ptList.Add(p2);
-            this.ptList.Add(p3);
-            this.ptList.Add(p4);
-            this.strength = strength;
-        }
-        public RectanglePointZone(List<PointD> pList, double strength = 1) : base(pList, strength)
-        {
-            this.ptList=pList;
-            this.strength = strength;
-        }
-    }
-
-
-    public class PolygonConvexPointZone
-    {
-        /// ATTENTION : dans cette classe l'ordre des points est très important !
-        /// Les points doivent être déclarés dans le sens trigonométrique
-        /// 
-        public List<PointD> ptList = new List<PointD>();
-        public double strength; //La force correspond à l'intensité du point central de la zone
-        
-        public PolygonConvexPointZone(List<PointD> pList, double strength = 1)
-        {
-            this.ptList = pList;
-            this.strength = strength;
-        }
-
-        public void GetBoundary(out List<PointD> upperPtList, out List<PointD> lowerPtList)
-        {
-            upperPtList = new List<PointD>();
-            lowerPtList = new List<PointD>();
-
-            //On récupère le pt le plus à gauche
-            var minPt = ptList.OrderBy(x => x.X).First();
-            var minPtIndex = ptList.IndexOf(minPt);
-
-            //On récupère le pt le plus à droite
-            var maxPt = ptList.OrderByDescending(x => x.X).First();
-            var maxPtIndex = ptList.IndexOf(maxPt);
-
-            if (minPtIndex < maxPtIndex)
-            {
-                for (int i = maxPtIndex; i < ptList.Count; i++)
-                    upperPtList.Add(ptList[i]);
-                for (int i = 0; i <= minPtIndex; i++)
-                    upperPtList.Add(ptList[i]);
-                for (int i = minPtIndex; i <= maxPtIndex; i++)
-                    lowerPtList.Add(ptList[i]);
-            }
-            else
-            {
-                for (int i = minPtIndex; i < ptList.Count; i++)
-                    lowerPtList.Add(ptList[i]);
-                for (int i = 0; i <= maxPtIndex; i++)
-                    lowerPtList.Add(ptList[i]);
-                for (int i = maxPtIndex; i <= minPtIndex; i++)
-                    upperPtList.Add(ptList[i]);
-            }
-        }
-    }
-
-
     public class ConicalZone
     {
         public PointD InitPoint;
@@ -559,46 +390,6 @@ namespace Utilities
             Radius = radius;
         }
     }
-
-    public class ConicalPolygonalZone
-    {
-        public PointD InitPoint;
-        public PolygonD Polygone;
-        public double Radius;
-        public ConicalPolygonalZone(PointD initPt, PolygonD polygon, double radius)
-        {
-            InitPoint = initPt;
-            Polygone = polygon;
-            Radius = radius;
-        }
-    }
-
-    public class PolygonElargedZone
-    {
-        public PolygonConvexPointZone Polygon;
-        public double Radius;
-        public PolygonElargedZone(PolygonConvexPointZone polygon, double radius)
-        {
-            Polygon = polygon;
-            Radius = radius;
-        }
-    }
-
-    public class AngularZone
-    {
-        public PointD InitPoint;
-        public PointD Cible;
-        public double DispersionAngle;
-        public double Strength;
-        public AngularZone(PointD initPt, PointD ciblePt, double dispersion, double strength = 1)
-        {
-            InitPoint = initPt;
-            Cible = ciblePt;
-            DispersionAngle = dispersion;
-            Strength = strength;
-        }
-    }
-
     public class SegmentZone
     {
         public PointD PointA;
@@ -613,4 +404,7 @@ namespace Utilities
             Strength = strength;
         }
     }
+
+
+
 }

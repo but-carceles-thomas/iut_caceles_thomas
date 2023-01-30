@@ -8,7 +8,7 @@
 #ifndef QEI_H
 #define	QEI_H
 
-#define DISTROUES 281.2
+#define DISTROUES 218.5
 #define FREQ_ECH_QEI  250
 #define POSITION_DATA 0x0061
 

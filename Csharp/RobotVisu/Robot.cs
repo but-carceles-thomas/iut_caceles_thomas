@@ -14,6 +14,7 @@ namespace RobotVisu
         public float distanceTelemetreCentre;
         public float distanceTelemetreGauche;
 		public Queue<byte> byteListReceived = new Queue<byte>();
+        public float timeStamp;
         public float positionXOdo;
         public float positionYOdo;
         public float angleRadOdo;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Utilities
 {
@@ -21,73 +20,38 @@ namespace Utilities
         /// <param name="bs">Array d'octets à traduire.</param>
         public static string GetString(this byte[] bs) => Encoding.ASCII.GetString(bs);
 
-        /// <summary>
-        /// Permet d'obtenir le tableau d'octets correspondant à ce float.
-        /// </summary>
-        /// <param name="f"><see cref="float"/> à traduire.</param>
-        public static unsafe byte[] GetBytes(this float f)
+
+        public static byte[] GetBytes(this float f)
         {
-            byte* f_ptr = (byte*)&f;
-
-            byte[] bytes = new byte[4];
-            for (int i = 0; i < 4; i++)
-                bytes[i] = f_ptr[i];
-
-            return bytes;
+            return BitConverter.GetBytes(f);
         }
 
-        /// <summary>
-        /// Permet d'obtenir le tableau d'octets correspondant à ce double.
-        /// </summary>
-        /// <param name="d"><see cref="double"/> à traduire.</param>
-        public static unsafe byte[] GetBytes(this double d)
+        public static byte[] GetBytes(this double d)
         {
-            byte* d_ptr = (byte*)&d;
-
-            byte[] bytes = new byte[8];
-            for (int i = 0; i < 8; i++)
-                bytes[i] = d_ptr[i];
-
-            return bytes;
+            return BitConverter.GetBytes(d);
         }
 
-        /// <summary>
-        /// Permet d'obtenir le tableau d'octets correspondant à ce INT32.
-        /// </summary>
-        /// <param name="d"><see cref="double"/> à traduire.</param>
-        public static unsafe byte[] GetBytes(this Int32 i)
+        public static byte[] GetBytes(this Int32 x)
         {
-            byte[] bytes = new byte[4];
-            bytes[0] = (byte)(i >> 24);
-            bytes[1] = (byte)(i >> 16);
-            bytes[2] = (byte)(i >> 8);
-            bytes[3] = (byte)i;
-            return bytes;
+            return BitConverter.GetBytes(x);
         }
-        /// <summary>
-        /// Permet d'obtenir le <see cref="float"/> correspondant au tableau d'octets rentré.
-        /// </summary>
-        /// <param name="b">Array d'octets à traduire.</param>
-        public static unsafe float GetFloat(this byte[] b)
+        public static byte[] GetBytes(this UInt32 x)
         {
-            float f;
-            fixed (byte* b_ptr = b)
-                f = *(float*)b_ptr;
-
-            return f;
+            return BitConverter.GetBytes(x);
+        }
+        public static byte[] GetBytes(this ushort x)
+        {
+            return BitConverter.GetBytes(x);
         }
 
-        /// <summary>
-        /// Permet d'obtenir le <see cref="double"/> correspondant au tableau d'octets rentré.
-        /// </summary>
-        /// <param name="b">Array d'octets à traduire.</param>
-        public static unsafe double GetDouble(this byte[] b)
+        public static float GetFloat(this byte[] tab)
         {
-            double d;
-            fixed (byte* b_ptr = b)
-                d = *(double*)b_ptr;
+            return BitConverter.ToSingle(tab, 0);
+        }
 
-            return d;
+        public static double GetDouble(this byte[] tab)
+        {
+            return BitConverter.ToDouble(tab, 0);
         }
 
         /// <summary>
@@ -125,10 +89,91 @@ namespace Utilities
         /// <param name="value">Valeur à rentrer.</param>
         public static void AddOrUpdate<T, T2>(this Dictionary<T, T2> d, T key, T2 value)
         {
-            if (d.ContainsKey(key))
-                d[key] = value;
-            else
-                d.Add(key, value);
+            if (d != null)
+            {
+                lock (d)
+                {
+                    if (d.ContainsKey(key))
+                        d[key] = value;
+                    else
+                    {
+                        try
+                        {
+                            d.Add(key, value);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("AddOrUpdate error");
+                        }
+                    }
+                }
+            }
         }
+
+        public static double StdDev<T>(this IEnumerable<T> list, Func<T, double> values)
+        {
+            // ref: https://stackoverflow.com/questions/2253874/linq-equivalent-for-standard-deviation
+            // ref: http://warrenseen.com/blog/2006/03/13/how-to-calculate-standard-deviation/ 
+            var mean = 0.0;
+            var sum = 0.0;
+            var stdDev = 0.0;
+            var n = 0;
+            foreach (var value in list.Select(values))
+            {
+                n++;
+                var delta = value - mean;
+                mean += delta / n;
+                sum += delta * (value - mean);
+            }
+            if (1 < n)
+                stdDev = Math.Sqrt(sum / (n - 1));
+
+            return stdDev;
+
+        }
+
+        public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+
+    }
+
+    public class RollingList<T> : List<T>
+    {
+        private readonly LinkedList<T> _list = new LinkedList<T>();
+
+        public RollingList(int maximumCount)
+        {
+            if (maximumCount <= 0)
+                throw new ArgumentException(null, nameof(maximumCount));
+
+            MaximumCount = maximumCount;
+        }
+
+        public int MaximumCount { get; }
+        new public int Count => _list.Count;
+
+        new public void Add(T value)
+        {
+            if (_list.Count == MaximumCount)
+            {
+                _list.RemoveFirst();
+            }
+            _list.AddLast(value);
+        }
+
+        new public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Count)
+                    throw new ArgumentOutOfRangeException();
+
+                return _list.Skip(index).First();
+            }
+        }
+
+        new public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
     }
 }

@@ -19,6 +19,8 @@ using MouseKeyboardActivityMonitor.WinApi;
 using MouseKeyboardActivityMonitor;
 using System.Windows.Forms;
 using WpfOscilloscopeControl;
+using SciChart.Charting.Visuals;
+using WpfAsservissementDisplay;
 
 namespace RobotVisu
 {
@@ -34,6 +36,9 @@ namespace RobotVisu
 
         public MainWindow()
         {
+            // Set this code once in App.xaml.cs or application startup
+            SciChartSurface.SetRuntimeLicenseKey("oyxbgnRp6QRmRXs59rp8vFCzacIdcu5XdPKDtAe98UnygxSZwLV1fC1N4ZLXUVSAG2pa2RfEOZUJerlT0NqpzZ/dbDI5nsm+OONzitIZkuDR8cG23HbheqCsljLzREGKsETdl0P1waT+zsRWrUUkIAERV0HTfHbaWU6K44JYNL6iiSXV3ZhV9MFOly7eGxiF5UCZE1g4a/SU+8eypSlfEoe0/Gem2boAG8Gx3+rNPulu0u5XNchtlYsvVIvY1u97gDVTKa5bJMvLAz2OmvIREiC2EEzaGgQVcJE/6pshxR01aevAq1zL0Z0jP4k1DNVcpWecPNoNjJpvVZya7oMQR4WAGq/M1HhFmjju+P7OKk51IdAnt3iUNDYryBBwb87hSKNHYJ1/7h67iDyMGsf2eFx69YobjA9QSXaZ2nIZkGUWNb2gppQTAf384fykn3M3xwsyEgVm9ERZb9MODfclK0KgPgA03ec/raKLSvXQQhKhARYaA14VT1LpR4hx5jVZZA==");
+
             InitializeComponent();
             serialPort1 = new ReliableSerialPort("COM7", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived; ;
@@ -49,8 +54,7 @@ namespace RobotVisu
             m_KeyboardHookManager.KeyDown += M_KeyboardHookManager_KeyDown; ;
 
             oscilloSpeed.AddOrUpdateLine(1, 200, "Ligne1");
-            oscilloSpeed.ChangeLineColor(1, Color.FromArgb(0xFF, 0x00, 0xFF, 0x00));
-            oscilloSpeed.AddPointToLine(1, 2, 10);
+            oscilloSpeed.ChangeLineColor(1, Color.FromArgb(0xFF, 0xFF, 0x00, 0x00));
         }
 
         bool autoControlActivated = false;
@@ -83,7 +87,7 @@ namespace RobotVisu
                 }
             }
         }
-
+        
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
             //if (robot.receivedText != "")
@@ -98,6 +102,12 @@ namespace RobotVisu
                 //textBoxReception.Text += "0x" + c.ToString("X2") + " ";
                 DecodeMessage(c);
             }
+            double xvalue = robot.positionXOdo;
+            double yvalue = robot.positionYOdo;
+            oscilloSpeed.AddPointToLine(1, xvalue, yvalue);
+
+
+            asservSpeedDisplay.UpdatePolarOdometrySpeed(xvalue, yvalue);
         }
 
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
@@ -390,6 +400,9 @@ namespace RobotVisu
 
                 case SuperVision.PositionData:
 
+                    robot.timeStamp = BitConverter.ToSingle(msgPayload, 0);
+                    textBoxReception.Text = "\ntemps : " + robot.timeStamp;
+
                     robot.positionXOdo = BitConverter.ToSingle(msgPayload, 4);
                     textBoxReception.Text = "\nposition x : " + robot.positionXOdo;
 
@@ -448,6 +461,11 @@ namespace RobotVisu
         {
             state = 1;
             SetAutoControl(state);
+        }
+
+        private void oscilloSpeed_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
