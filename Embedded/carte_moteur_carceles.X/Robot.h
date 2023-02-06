@@ -1,22 +1,25 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "asservissement.h"
+
+
 typedef struct robotStateBITS {
 
     union {
 
         struct {
             unsigned char taskEnCours;
-            float vitesseGaucheConsigne ;
+            float vitesseGaucheConsigne;
             float vitesseGaucheCommandeCourante;
-            float vitesseDroiteConsigne ;
+            float vitesseDroiteConsigne;
             float vitesseDroiteCommandeCourante;
             float acceleration;
-            float  distanceTelemetreDroit;
-            float  distanceTelemetreCentre;
-            float  distanceTelemetreGauche;
-            float  distanceTelemetreExGauche;
-            float  distanceTelemetreExDroit;
+            float distanceTelemetreDroit;
+            float distanceTelemetreCentre;
+            float distanceTelemetreGauche;
+            float distanceTelemetreExGauche;
+            float distanceTelemetreExDroit;
             double xPosFromOdometry;
             double yPosFromOdometry;
             double angleRadianFromOdometry;
@@ -28,6 +31,9 @@ typedef struct robotStateBITS {
             double vitesseLineaireFromOdometry;
             double vitesseAngulaireFromOdometry;
             
+            PidCorrector PidX;
+            PidCorrector PidTheta;
+
         }
         ;
     }

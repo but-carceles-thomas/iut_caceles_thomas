@@ -107,7 +107,8 @@ namespace RobotVisu
             oscilloSpeed.AddPointToLine(1, xvalue, yvalue);
 
 
-            asservSpeedDisplay.UpdatePolarOdometrySpeed(xvalue, yvalue);
+            //asservSpeedDisplay.UpdatePolarOdometrySpeed(xvalue, yvalue);
+            asservSpeedDisplay.UpdatePolarOdometrySpeed(robot.vitLinéaireOdo, robot.vitAngulaireOdo);
         }
 
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
@@ -328,7 +329,8 @@ namespace RobotVisu
             DistanceIR = 0x0030,
             ConsigneVitesse = 0x0040,
             RobotState = 0x0050,
-            PositionData = 0x0061
+            PositionData = 0x0061,
+            SetupPidAsservissement = 0x0063
         }
 
         public enum StateRobot
@@ -418,6 +420,21 @@ namespace RobotVisu
                     robot.vitAngulaireOdo = BitConverter.ToSingle(msgPayload, 20);
                     textBoxReception.Text += "\nvit.angulaire : " + robot.vitAngulaireOdo;
                     break;
+
+                case SuperVision.SetupPidAsservissement:
+                    robot.Kp = BitConverter.ToSingle(msgPayload, 0);
+
+                    robot.Kd = BitConverter.ToSingle(msgPayload, 4);
+
+                    robot.Ki = BitConverter.ToSingle(msgPayload, 8);
+
+                    robot.proportionelleMax = BitConverter.ToSingle(msgPayload, 12);
+
+                    robot.integralMax = BitConverter.ToSingle(msgPayload, 16);
+
+                    robot.deriveeMax = BitConverter.ToSingle(msgPayload, 20);
+
+                    break;
             }
         }
 
@@ -463,9 +480,6 @@ namespace RobotVisu
             SetAutoControl(state);
         }
 
-        private void oscilloSpeed_Loaded(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

@@ -20,6 +20,12 @@ namespace RobotVisu
         public float angleRadOdo;
         public float vitLinéaireOdo;
         public float vitAngulaireOdo;
+        public double Kp;
+        public double Ki;
+        public double Kd;
+        public double proportionelleMax;
+        public double integralMax;
+        public double deriveeMax;
 
         public Robot()
         {
