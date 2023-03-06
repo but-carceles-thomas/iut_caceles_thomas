@@ -50,7 +50,7 @@
             </StackPanel>
         </StackPanel>
         <CheckBox x:Name="modeManuel" Content="modeManuel" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" Checked="modeManuel_Checked" Unchecked="modeManuel_Unchecked"/>
-        <osc:WpfOscilloscope x:Name="oscilloSpeed" Grid.Row="2" Grid.Column="1"  Loaded="oscilloSpeed_Loaded" />
+        <osc:WpfOscilloscope x:Name="oscilloSpeed" Grid.Row="2" Grid.Column="1" />
         <GroupBox Background="Black" Grid.Row="3" Grid.Column="1">
             <AsservDisplay:AsservissementRobot2RouesDisplayControl x:Name="asservSpeedDisplay" />
         </GroupBox>

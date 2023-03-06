@@ -22,5 +22,6 @@ void SetRobotAutoControlState(unsigned char state);
 #define SET_ROBOT_MANUAL_CONTROL 0x0052
 
 
+
 #endif	/* UART_PROTOCOLE_H */
 

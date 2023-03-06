@@ -20,16 +20,25 @@ namespace RobotVisu
         public float angleRadOdo;
         public float vitLinéaireOdo;
         public float vitAngulaireOdo;
+        public PID pidLin;
+        public PID pidAng;
+
+        public Robot()
+        {
+            
+		}
+    }
+
+    public class PID
+    {
         public double Kp;
         public double Ki;
         public double Kd;
         public double proportionelleMax;
         public double integralMax;
         public double deriveeMax;
-
-        public Robot()
-        {
-            
-		}
+        public double KpTheta;
+        public double KiTheta;
+        public double KdTheta;
     }
 }

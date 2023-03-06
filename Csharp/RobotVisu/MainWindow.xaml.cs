@@ -148,6 +148,7 @@ namespace RobotVisu
 
         byte[] byteList = new byte[20];
         byte[] byteList2;
+        byte[] byteList3;
         private void buttontest_Click(object sender, RoutedEventArgs e)
         {
             //for (int i = 0; i < 20; i++)
@@ -174,16 +175,25 @@ namespace RobotVisu
             byte[] led = { 0x01, 0x01 };
             UartEncodeAndSendMessage((int)SuperVision.ReglageLED, 2, led);
 
-
-
+            byteList3 = new byte[9];
+            byteList3[0] = 10;
+            byteList3[1] = 10;
+            byteList3[2] = 10;
+            byteList3[3] = 10;
+            byteList3[4] = 10;
+            byteList3[5] = 10;
+            byteList3[6] = 10;
+            byteList3[7] = 10;
+            byteList3[8] = 10;
+            UartEncodeAndSendMessage((int)SuperVision.SetupPidAsservissement, 9, byteList3);
         }
 
-        private void buttontestFalse_Click(object sender, RoutedEventArgs e)
-        {
-            string s = "Bonjour";
-            byteList = Encoding.UTF8.GetBytes(s);
-            UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
-        }
+        //private void buttontestFalse_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string s = "Bonjour";
+        //    byteList = Encoding.UTF8.GetBytes(s);
+        //    UartEncodeAndSendMessage(0x0080, byteList.Length, byteList);
+        //}
 
         byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
@@ -330,7 +340,7 @@ namespace RobotVisu
             ConsigneVitesse = 0x0040,
             RobotState = 0x0050,
             PositionData = 0x0061,
-            SetupPidAsservissement = 0x0063
+            SetupPidAsservissement = 0x0070
         }
 
         public enum StateRobot
@@ -422,21 +432,32 @@ namespace RobotVisu
                     break;
 
                 case SuperVision.SetupPidAsservissement:
-                    robot.Kp = BitConverter.ToSingle(msgPayload, 0);
+                    robot.pidLin.Kp = BitConverter.ToSingle(msgPayload, 0);                 
+                    robot.pidLin.Ki = BitConverter.ToSingle(msgPayload, 4);
+                    robot.pidLin.Kd = BitConverter.ToSingle(msgPayload, 8);
 
-                    robot.Kd = BitConverter.ToSingle(msgPayload, 4);
+                    robot.pidLin.proportionelleMax = BitConverter.ToSingle(msgPayload, 12);
+                    robot.pidLin.integralMax = BitConverter.ToSingle(msgPayload, 16);
+                    robot.pidLin.deriveeMax = BitConverter.ToSingle(msgPayload, 20);
 
-                    robot.Ki = BitConverter.ToSingle(msgPayload, 8);
+                    robot.pidAng.KpTheta = BitConverter.ToSingle(msgPayload, 24);
+                    robot.pidAng.KiTheta = BitConverter.ToSingle(msgPayload, 28);
+                    robot.pidAng.KdTheta = BitConverter.ToSingle(msgPayload, 32);
 
-                    robot.proportionelleMax = BitConverter.ToSingle(msgPayload, 12);
+                    robot.pidAng.proportionelleMax = BitConverter.ToSingle(msgPayload, 36);
+                    robot.pidAng.integralMax = BitConverter.ToSingle(msgPayload, 40);
+                    robot.pidAng.deriveeMax = BitConverter.ToSingle(msgPayload, 44);
 
-                    robot.integralMax = BitConverter.ToSingle(msgPayload, 16);
-
-                    robot.deriveeMax = BitConverter.ToSingle(msgPayload, 20);
+                    asservSpeedDisplay.UpdatePolarSpeedCorrectionGains(robot.pidLin.Kp, robot.pidAng.KpTheta, robot.pidLin.Ki, robot.pidAng.KiTheta, robot.pidLin.Kd, robot.pidAng.KdTheta);
 
                     break;
             }
         }
+
+        //void SetupPidAsservissement(double PidCorrector, double Kp, double Ki, double Kd, double proportionelleMax, double integralMax, double deriveeMax)
+        //{
+        //    PidCorrector -> Kp = Kp;
+        //}
 
         private void textBoxEmission_KeyUp_1(object sender, System.Windows.Input.KeyEventArgs e)
         {
