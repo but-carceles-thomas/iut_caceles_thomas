@@ -175,17 +175,22 @@ namespace RobotVisu
             byte[] led = { 0x01, 0x01 };
             UartEncodeAndSendMessage((int)SuperVision.ReglageLED, 2, led);
 
-            byteList3 = new byte[9];
-            byteList3[0] = 10;
-            byteList3[1] = 10;
-            byteList3[2] = 10;
-            byteList3[3] = 10;
-            byteList3[4] = 10;
-            byteList3[5] = 10;
-            byteList3[6] = 10;
-            byteList3[7] = 10;
-            byteList3[8] = 10;
-            UartEncodeAndSendMessage((int)SuperVision.SetupPidAsservissement, 9, byteList3);
+            byteList3 = new byte[9*6];
+
+            var t = BitConverter.GetBytes((float)10.0);
+            Array.Copy(t, 0, byteList3, 0, 4);
+            Array.Copy(t, 0, byteList3, 4, 4);
+            Array.Copy(t, 0, byteList3, 8, 4);
+            Array.Copy(t, 0, byteList3, 12, 4);
+            Array.Copy(t, 0, byteList3, 16, 4);
+            Array.Copy(t, 0, byteList3, 20, 4);
+            Array.Copy(t, 0, byteList3, 24, 4);
+            Array.Copy(t, 0, byteList3, 28, 4);
+            Array.Copy(t, 0, byteList3, 32, 4);
+            Array.Copy(t, 0, byteList3, 36, 4);
+            Array.Copy(t, 0, byteList3, 40, 4);
+            Array.Copy(t, 0, byteList3, 44, 4);
+            UartEncodeAndSendMessage((int)SuperVision.PC_TO_R_PidAsservConstants, 48, byteList3);
         }
 
         //private void buttontestFalse_Click(object sender, RoutedEventArgs e)
@@ -340,7 +345,9 @@ namespace RobotVisu
             ConsigneVitesse = 0x0040,
             RobotState = 0x0050,
             PositionData = 0x0061,
-            SetupPidAsservissement = 0x0070
+            PC_TO_R_PidAsservConstants = 0x0170,
+            R_TO_PC_PidAsservConstants = 0x0070,
+            R_TO_PC_PidAsservVariables = 0x0071
         }
 
         public enum StateRobot
@@ -431,7 +438,7 @@ namespace RobotVisu
                     textBoxReception.Text += "\nvit.angulaire : " + robot.vitAngulaireOdo;
                     break;
 
-                case SuperVision.SetupPidAsservissement:
+                case SuperVision.R_TO_PC_PidAsservConstants:
                     robot.pidLin.Kp = BitConverter.ToSingle(msgPayload, 0);                 
                     robot.pidLin.Ki = BitConverter.ToSingle(msgPayload, 4);
                     robot.pidLin.Kd = BitConverter.ToSingle(msgPayload, 8);
@@ -440,16 +447,38 @@ namespace RobotVisu
                     robot.pidLin.integralMax = BitConverter.ToSingle(msgPayload, 16);
                     robot.pidLin.deriveeMax = BitConverter.ToSingle(msgPayload, 20);
 
-                    robot.pidAng.KpTheta = BitConverter.ToSingle(msgPayload, 24);
-                    robot.pidAng.KiTheta = BitConverter.ToSingle(msgPayload, 28);
-                    robot.pidAng.KdTheta = BitConverter.ToSingle(msgPayload, 32);
+                    robot.pidAng.Kp = BitConverter.ToSingle(msgPayload, 24);
+                    robot.pidAng.Ki = BitConverter.ToSingle(msgPayload, 28);
+                    robot.pidAng.Kd = BitConverter.ToSingle(msgPayload, 32);
 
                     robot.pidAng.proportionelleMax = BitConverter.ToSingle(msgPayload, 36);
                     robot.pidAng.integralMax = BitConverter.ToSingle(msgPayload, 40);
                     robot.pidAng.deriveeMax = BitConverter.ToSingle(msgPayload, 44);
+                    
+                    asservSpeedDisplay.UpdatePolarSpeedCorrectionGains(robot.pidLin.Kp, robot.pidAng.Kp, robot.pidLin.Ki, robot.pidAng.Ki, robot.pidLin.Kd, robot.pidAng.Kd);
+                    break;
 
-                    asservSpeedDisplay.UpdatePolarSpeedCorrectionGains(robot.pidLin.Kp, robot.pidAng.KpTheta, robot.pidLin.Ki, robot.pidAng.KiTheta, robot.pidLin.Kd, robot.pidAng.KdTheta);
 
+                case SuperVision.R_TO_PC_PidAsservVariables:
+                    robot.pidLin.Mesure = BitConverter.ToSingle(msgPayload, 0);
+                    robot.pidLin.Erreur = BitConverter.ToSingle(msgPayload, 4);
+                    robot.pidLin.Command = BitConverter.ToSingle(msgPayload, 8);
+
+                    robot.pidLin.CorrP = BitConverter.ToSingle(msgPayload, 12);
+                    robot.pidLin.CorrI = BitConverter.ToSingle(msgPayload, 16);
+                    robot.pidLin.CorrD = BitConverter.ToSingle(msgPayload, 20);
+
+                    robot.pidAng.Mesure = BitConverter.ToSingle(msgPayload, 24);
+                    robot.pidAng.Erreur = BitConverter.ToSingle(msgPayload, 28);
+                    robot.pidAng.Command = BitConverter.ToSingle(msgPayload, 32);
+
+                    robot.pidAng.CorrP = BitConverter.ToSingle(msgPayload, 36);
+                    robot.pidAng.CorrI = BitConverter.ToSingle(msgPayload, 40);
+                    robot.pidAng.CorrD = BitConverter.ToSingle(msgPayload, 44);
+
+                    
+                    asservSpeedDisplay.UpdatePolarSpeedConsigneValues(robot.pidLin.Mesure, robot.pidAng.Mesure);
+                    asservSpeedDisplay.UpdatePolarSpeedErrorValues(robot.pidLin.Erreur, robot.pidAng.Erreur);
                     break;
             }
         }

@@ -20,8 +20,8 @@ namespace RobotVisu
         public float angleRadOdo;
         public float vitLinéaireOdo;
         public float vitAngulaireOdo;
-        public PID pidLin;
-        public PID pidAng;
+        public PID pidLin = new PID();
+        public PID pidAng = new PID();
 
         public Robot()
         {
@@ -31,14 +31,21 @@ namespace RobotVisu
 
     public class PID
     {
+        //Constants
         public double Kp;
         public double Ki;
         public double Kd;
         public double proportionelleMax;
         public double integralMax;
         public double deriveeMax;
-        public double KpTheta;
-        public double KiTheta;
-        public double KdTheta;
+
+        //Variables
+        public float Erreur;
+        public float Mesure;
+        public float CorrP;
+        public float CorrI;
+        public float CorrD;
+        public float Command;
+
     }
 }

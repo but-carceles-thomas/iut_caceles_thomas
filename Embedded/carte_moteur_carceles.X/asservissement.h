@@ -18,6 +18,7 @@ typedef struct _PidCorrector {
     double erreurIntegrale;
     double epsilon_1;
     double erreur;
+    double Consigne;
     
     //For Debug only
     double corrP;
@@ -25,11 +26,11 @@ typedef struct _PidCorrector {
     double corrD;
 } PidCorrector;
 
-#define SET_ASSERVISSEMENT 0x0070
-
+void SetAsservissement(unsigned char * payload);
 void SetupPidAsservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd, double proportionelleMax);
 void DisplayPid(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd, double proportionelleMax);
 void DisplayAsservConstant();
+void DisplayAsservVariables();
 
 #endif	/* ASSERVISSEMENT_H */
 

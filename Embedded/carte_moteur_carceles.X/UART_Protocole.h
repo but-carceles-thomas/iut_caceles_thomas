@@ -13,11 +13,13 @@ unsigned char UartCalculateChecksum(int msgFunction,
 void UartEncodeAndSendMessage(int msgFunction,
         int msgPayloadLength, unsigned char* msgPayload);
 void UartDecodeMessage(unsigned char c);
-void UartProcessDecodedMessage(unsigned char function,
-        unsigned char payloadLength, unsigned char* payload);
+void UartProcessDecodedMessage(int function, int payloadLength, unsigned char* payload);
 void SetRobotState(unsigned char state);
 void SetRobotAutoControlState(unsigned char state);
 
+#define PC_TO_R_ASSERVISSEMENT_CONSTANTS 0x0170
+#define R_TO_PC_ASSERVISSEMENT_CONSTANTS 0x0070
+#define R_TO_PC_ASSERVISSEMENT_VARIABLES 0x0071
 #define SET_ROBOT_STATE 0x0051
 #define SET_ROBOT_MANUAL_CONTROL 0x0052
 

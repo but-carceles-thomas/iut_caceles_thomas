@@ -3,6 +3,7 @@
 #include "CB_TX1.h"
 #include "Robot.h"
 #include "asservissement.h"
+#include "Utilities.h"
 
 extern unsigned char autoControl;
 extern unsigned char stateRobot;
@@ -112,8 +113,8 @@ void UartDecodeMessage(unsigned char c) {
     }
 }
 
-void UartProcessDecodedMessage(unsigned char function,
-        unsigned char payloadLength, unsigned char* payload) {
+void UartProcessDecodedMessage(int function,
+        int payloadLength, unsigned char* payload) {
     //Fonction appelée après le décodage pour exécuter l'action
     //correspondant au message reçu
     switch (function) {
@@ -123,9 +124,14 @@ void UartProcessDecodedMessage(unsigned char function,
         case SET_ROBOT_MANUAL_CONTROL:
             SetRobotAutoControlState(payload[0]);
             break;
-        case SET_ASSERVISSEMENT:
+        case PC_TO_R_ASSERVISSEMENT_CONSTANTS:
+            
             SetAsservissement(payload);
             DisplayAsservConstant();
+            
+            robotState.PidX.epsilon_1 = 5.0;
+            robotState.PidTheta.epsilon_1 = 5.0;
+            DisplayAsservVariables();
             break;
         default:
             break;
@@ -140,41 +146,6 @@ void SetRobotAutoControlState(unsigned char state) {
     autoControl = state;
 }
 
-void SetAsservissement(unsigned char * payload) {
-    // Réglage PID linéaire
-    robotState.PidX.Kp = getFloat(payload, 0);
-    robotState.PidX.Ki = getFloat(payload, 4);
-    robotState.PidX.Kd = getFloat(payload, 8);
-
-    robotState.PidX.erreurProportionelleMax = getFloat(payload, 12);
-    robotState.PidX.erreurIntegraleMax = getFloat(payload, 16);
-    robotState.PidX.erreurDeriveeMax = getFloat(payload, 20);
-    
-    robotState.PidX.erreurIntegrale = getFloat(payload, 24);
-    robotState.PidX.epsilon_1 = getFloat(payload, 28);
-    robotState.PidX.erreur = getFloat(payload, 32);
-    
-    robotState.PidX.corrP = getFloat(payload, 36);
-    robotState.PidX.corrI = getFloat(payload, 40);
-    robotState.PidX.corrD = getFloat(payload, 44);
-
-    // Réglage PID angulaire
-    robotState.PidTheta.Kp = getFloat(payload, 48);
-    robotState.PidTheta.Ki = getFloat(payload, 52);
-    robotState.PidTheta.Kd = getFloat(payload, 56);
-
-    robotState.PidTheta.erreurProportionelleMax = getFloat(payload, 60);
-    robotState.PidTheta.erreurIntegraleMax = getFloat(payload, 64);
-    robotState.PidTheta.erreurDeriveeMax = getFloat(payload, 68);
-    
-    robotState.PidTheta.erreurIntegrale = getFloat(payload, 72);
-    robotState.PidTheta.epsilon_1 = getFloat(payload, 76);
-    robotState.PidTheta.erreur = getFloat(payload, 80);
-    
-    robotState.PidTheta.corrP = getFloat(payload, 84);
-    robotState.PidTheta.corrI = getFloat(payload, 88);
-    robotState.PidTheta.corrD = getFloat(payload, 92);
-}
 
 //*************************************************************************/
 //Fonctions correspondant aux messages
