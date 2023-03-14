@@ -1,7 +1,7 @@
 #ifndef UTILITIES_H
 #define	UTILITIES_H
 
-#define PI 3.141592653589793
+#include "ToolBox.h"
 
 //double Abs(double value);
 //double Max(double value, double value2);

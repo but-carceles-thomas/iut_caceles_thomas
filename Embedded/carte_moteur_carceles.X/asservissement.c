@@ -3,6 +3,7 @@
 #include "UART_Protocole.h"
 #include "QEI.h"
 #include "Utilities.h"
+#include "ToolBox.h"
 
 double proportionelleMax;
 double integralMax;
@@ -15,7 +16,7 @@ void SetupPidAsservissement(volatile PidCorrector* PidCorr, double Kp, double Ki
     PidCorr->erreurIntegraleMax = integralMax; //On limite la correction due au Ki
     PidCorr->Kd = Kd;
     PidCorr->erreurDeriveeMax = deriveeMax;
-    PidCorr->Consigne = consigne;
+    //PidCorr->Consigne = consigne;
 }
 
 void SetAsservissement(unsigned char * payload) {
@@ -79,7 +80,7 @@ void DisplayAsservVariables() {
 double Correcteur(volatile PidCorrector* PidCorr, double erreur) {
     PidCorr->erreur = erreur;
     double erreurProportionnelle = LimitToInterval(PidCorr->erreur, -robotState.PidX.erreurProportionelleMax / PidCorr->Kp, robotState.PidX.erreurProportionelleMax / PidCorr->Kp);
-    PidCorr->corrP = PidCorr.Kp * erreurProportionnelle;
+    PidCorr->corrP = PidCorr->Kp * erreurProportionnelle;
     PidCorr->erreurIntegrale += erreur / FREQ_ECH_QEI;
     PidCorr->erreurIntegrale = LimitToInterval(PidCorr->erreurIntegrale, -robotState.PidX.erreurIntegraleMax / PidCorr->Ki, robotState.PidX.erreurIntegraleMax / PidCorr->Ki);
     PidCorr->corrI = PidCorr->Ki * PidCorr->erreurIntegrale;
@@ -96,4 +97,8 @@ void UpdateAsservissement() {
 
     robotState.xCorrectionVitessePourcent = Correcteur(&robotState.PidX, robotState.PidX.erreur);
     robotState.thetaCorrectionVitessePourcent = Correcteur(&robotState.PidTheta, robotState.PidTheta.erreur);
+    
+    double coeff = 50;
+    robotState.vitesseGaucheConsigne = coeff * (robotState.vitesseLineaireCommand - DISTROUES / 2 * robotState.vitesseAngulaireCommand);
+    robotState.vitesseDroiteConsigne = coeff * (robotState.vitesseLineaireCommand + DISTROUES / 2 * robotState.vitesseAngulaireCommand);
 }

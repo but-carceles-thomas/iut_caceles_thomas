@@ -27,10 +27,12 @@ typedef struct _PidCorrector {
 } PidCorrector;
 
 void SetAsservissement(unsigned char * payload);
-void SetupPidAsservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd, double proportionelleMax);
+void SetupPidAsservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd, double proportionelleMax, double integralMax, double deriveeMax, double consigne);
 void DisplayPid(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd, double proportionelleMax);
 void DisplayAsservConstant();
 void DisplayAsservVariables();
+double Correcteur(volatile PidCorrector* PidCorr, double erreur);
+void UpdateAsservissement();
 
 #endif	/* ASSERVISSEMENT_H */
 

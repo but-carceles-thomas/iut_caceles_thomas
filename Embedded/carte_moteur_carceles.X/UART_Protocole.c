@@ -128,9 +128,6 @@ void UartProcessDecodedMessage(int function,
             
             SetAsservissement(payload);
             DisplayAsservConstant();
-            
-            robotState.PidX.epsilon_1 = 5.0;
-            robotState.PidTheta.epsilon_1 = 5.0;
             DisplayAsservVariables();
             break;
         default:

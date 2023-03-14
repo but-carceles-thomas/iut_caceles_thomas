@@ -175,22 +175,22 @@ namespace RobotVisu
             byte[] led = { 0x01, 0x01 };
             UartEncodeAndSendMessage((int)SuperVision.ReglageLED, 2, led);
 
-            byteList3 = new byte[9*6];
+            //byteList3 = new byte[9*6];
 
-            var t = BitConverter.GetBytes((float)10.0);
-            Array.Copy(t, 0, byteList3, 0, 4);
-            Array.Copy(t, 0, byteList3, 4, 4);
-            Array.Copy(t, 0, byteList3, 8, 4);
-            Array.Copy(t, 0, byteList3, 12, 4);
-            Array.Copy(t, 0, byteList3, 16, 4);
-            Array.Copy(t, 0, byteList3, 20, 4);
-            Array.Copy(t, 0, byteList3, 24, 4);
-            Array.Copy(t, 0, byteList3, 28, 4);
-            Array.Copy(t, 0, byteList3, 32, 4);
-            Array.Copy(t, 0, byteList3, 36, 4);
-            Array.Copy(t, 0, byteList3, 40, 4);
-            Array.Copy(t, 0, byteList3, 44, 4);
-            UartEncodeAndSendMessage((int)SuperVision.PC_TO_R_PidAsservConstants, 48, byteList3);
+            //var t = BitConverter.GetBytes((float)10.0);
+            //Array.Copy(t, 0, byteList3, 0, 4);
+            //Array.Copy(t, 0, byteList3, 4, 4);
+            //Array.Copy(t, 0, byteList3, 8, 4);
+            //Array.Copy(t, 0, byteList3, 12, 4);
+            //Array.Copy(t, 0, byteList3, 16, 4);
+            //Array.Copy(t, 0, byteList3, 20, 4);
+            //Array.Copy(t, 0, byteList3, 24, 4);
+            //Array.Copy(t, 0, byteList3, 28, 4);
+            //Array.Copy(t, 0, byteList3, 32, 4);
+            //Array.Copy(t, 0, byteList3, 36, 4);
+            //Array.Copy(t, 0, byteList3, 40, 4);
+            //Array.Copy(t, 0, byteList3, 44, 4);
+            //UartEncodeAndSendMessage((int)SuperVision.PC_TO_R_PidAsservConstants, 48, byteList3);
         }
 
         //private void buttontestFalse_Click(object sender, RoutedEventArgs e)
@@ -530,6 +530,52 @@ namespace RobotVisu
             SetAutoControl(state);
         }
 
+        private void buttonasserv_Click(object sender, RoutedEventArgs e)
+        {
+            float kpX = 80;
+            float kiX = 0;
+            float kdX = 0;
+            float propXmax = 1000;
+            float inteXmax = 1000;
+            float deriXmax = 1000;
 
+            float kpT = 0;
+            float kiT = 0;
+            float kdT = 0;
+            float propTmax = 1000;
+            float inteTmax = 1000;
+            float deriTmax = 1000;
+
+           byte[] tkpX = BitConverter.GetBytes(kpX);
+            byte[] tkiX = BitConverter.GetBytes(kiX);
+            byte[] tkdX = BitConverter.GetBytes(kdX);
+
+            byte[] tpropXmax = BitConverter.GetBytes(propXmax);
+            byte[] tinteXmax = BitConverter.GetBytes(inteXmax);
+            byte[] tderiXmax = BitConverter.GetBytes(deriXmax);
+
+            byte[] tkpT = BitConverter.GetBytes(kpT);
+            byte[] tkiT = BitConverter.GetBytes(kiT);
+            byte[] tkdT = BitConverter.GetBytes(kdT);
+
+            byte[] tpropTmax = BitConverter.GetBytes(propTmax);
+            byte[] tinteTmax = BitConverter.GetBytes(inteTmax);
+            byte[] tderiTmax = BitConverter.GetBytes(deriTmax);
+
+            byte[] b = new byte[48];
+            Array.Copy(tkpX, 0, b, 0, 4);
+            Array.Copy(tkiX, 0, b, 4, 4);
+            Array.Copy(tkdX, 0, b, 8, 4);
+            Array.Copy(tpropXmax, 0, b, 12, 4);
+            Array.Copy(tinteXmax, 0, b, 16, 4);
+            Array.Copy(tderiXmax, 0, b, 20, 4);
+            Array.Copy(tkpT, 0, b, 24, 4);
+            Array.Copy(tkiT, 0, b, 28, 4);
+            Array.Copy(tkdT, 0, b, 32, 4);
+            Array.Copy(tpropTmax, 0, b, 36, 4);
+            Array.Copy(tinteTmax, 0, b, 40, 4);
+            Array.Copy(tderiTmax, 0, b, 44, 4);
+            UartEncodeAndSendMessage((int)SuperVision.PC_TO_R_PidAsservConstants, 48, b);
+        }
     }
 }

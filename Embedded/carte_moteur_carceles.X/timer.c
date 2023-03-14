@@ -125,7 +125,7 @@ void initTimer4(void) {
 // Interruption du timer 4
 
 void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
-    OperatingSystemLoop();
+    //OperatingSystemLoop();
     timestamp = timestamp + 1;
     IFS1bits.T4IF = 0;
 }
