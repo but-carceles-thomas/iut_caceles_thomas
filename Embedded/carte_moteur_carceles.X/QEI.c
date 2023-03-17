@@ -38,8 +38,8 @@ void QEIUpdateData() {
 
     //Conversion en mm (r\?egl\?e pour la taille des roues codeuses)
     
-    QeiDroitPosition = 0.0164933 * QEI1RawValue;
-    QeiGauchePosition = -0.0164933 * QEI2RawValue;
+    QeiDroitPosition = 0.0000164933 * QEI1RawValue;
+    QeiGauchePosition = -0.0000164933 * QEI2RawValue;
 
     //Calcul des deltas de position
     delta_d = QeiDroitPosition - QeiDroitPosition_T_1;
@@ -80,4 +80,9 @@ void SendPositionData() {
     getBytesFromFloat(positionPayload, 16, (float) (robotState.vitesseLineaireFromOdometry));
     getBytesFromFloat(positionPayload, 20, (float) (robotState.vitesseAngulaireFromOdometry));
     UartEncodeAndSendMessage(POSITION_DATA, 24, positionPayload);
+    
+//     unsigned char vitessePayload[8];
+//    getBytesFromFloat(vitessePayload, 0, (float)(robotState.vitesseDroitFromOdometry));
+//    getBytesFromFloat(vitessePayload, 4, (float)(robotState.vitesseGaucheFromOdometry));
+//    UartEncodeAndSendMessage(VITESSE_DATA, 8 , vitessePayload);
 }

@@ -345,6 +345,7 @@ namespace RobotVisu
             ConsigneVitesse = 0x0040,
             RobotState = 0x0050,
             PositionData = 0x0061,
+            VistesseData = 0x0062,
             PC_TO_R_PidAsservConstants = 0x0170,
             R_TO_PC_PidAsservConstants = 0x0070,
             R_TO_PC_PidAsservVariables = 0x0071
@@ -456,6 +457,7 @@ namespace RobotVisu
                     robot.pidAng.deriveeMax = BitConverter.ToSingle(msgPayload, 44);
                     
                     asservSpeedDisplay.UpdatePolarSpeedCorrectionGains(robot.pidLin.Kp, robot.pidAng.Kp, robot.pidLin.Ki, robot.pidAng.Ki, robot.pidLin.Kd, robot.pidAng.Kd);
+                    asservSpeedDisplay.UpdatePolarSpeedCorrectionLimits(robot.pidLin.proportionelleMax, robot.pidAng.proportionelleMax, robot.pidLin.integralMax, robot.pidAng.integralMax, robot.pidLin.deriveeMax, robot.pidAng.deriveeMax);
                     break;
 
 
@@ -479,6 +481,8 @@ namespace RobotVisu
                     
                     asservSpeedDisplay.UpdatePolarSpeedConsigneValues(robot.pidLin.Mesure, robot.pidAng.Mesure);
                     asservSpeedDisplay.UpdatePolarSpeedErrorValues(robot.pidLin.Erreur, robot.pidAng.Erreur);
+                    asservSpeedDisplay.UpdatePolarSpeedCorrectionValues(robot.pidLin.CorrP, robot.pidAng.CorrP, robot.pidLin.CorrI, robot.pidAng.CorrI, robot.pidLin.CorrD, robot.pidAng.CorrD);
+                    asservSpeedDisplay.UpdatePolarSpeedCommandValues(robot.pidLin.Command, robot.pidAng.Command);
                     break;
             }
         }
@@ -532,14 +536,14 @@ namespace RobotVisu
 
         private void buttonasserv_Click(object sender, RoutedEventArgs e)
         {
-            float kpX = 80;
+            float kpX = 0;
             float kiX = 0;
             float kdX = 0;
             float propXmax = 1000;
             float inteXmax = 1000;
             float deriXmax = 1000;
 
-            float kpT = 0;
+            float kpT = 40;
             float kiT = 0;
             float kdT = 0;
             float propTmax = 1000;

@@ -5,6 +5,7 @@
 #include "adc.h"
 #include "main.h"
 #include "QEI.h"
+#include "asservissement.h"
 //#include "Utilities.h"
 
 unsigned char change = 0;
@@ -83,6 +84,7 @@ void InitTimer1(void) {
 int QeiSendCounter=0;
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
+    UpdateAsservissement();
     PWMUpdateSpeed();
     ADC1StartConversionSequence();    
     QEIUpdateData();
