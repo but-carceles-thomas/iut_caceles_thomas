@@ -8,9 +8,9 @@
 
 
 
-int cbRx1Head;
-int cbRx1Tail;
-unsigned char cbRx1Buffer[CBRX1_BUFFER_SIZE];
+volatile int cbRx1Head;
+volatile int cbRx1Tail;
+volatile unsigned char cbRx1Buffer[CBRX1_BUFFER_SIZE];
 
 void CB_RX1_Add(unsigned char value) {
     if (CB_RX1_GetRemainingSize() > 0) {
@@ -26,8 +26,8 @@ unsigned char CB_RX1_Get(void) {
     unsigned char value = cbRx1Buffer[cbRx1Tail];
     cbRx1Tail++;
     if (cbRx1Tail >= CBRX1_BUFFER_SIZE) {
-            cbRx1Tail = 0;
-        }
+        cbRx1Tail = 0;
+    }
     return value;
 }
 
@@ -48,27 +48,28 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void) {
     if (U1STAbits.OERR == 1) {
         U1STAbits.OERR = 0;
     }
+    /* must clear the overrun error to keep uart receiving */
+    if (U1STAbits.PERR == 1) {
+        U1STAbits.PERR = 0;
+    }
     /* get the data */
     while (U1STAbits.URXDA == 1) {
         CB_RX1_Add(U1RXREG);
     }
 }
 
-
 int CB_RX1_GetDataSize(void) {
     // return size of data stored in circular buffer
     int dataSize;
     if (cbRx1Head >= cbRx1Tail) {
         dataSize = cbRx1Head - cbRx1Tail;
-    }
-    else
-    {
-        dataSize =  CBRX1_BUFFER_SIZE - (cbRx1Tail - cbRx1Head);
+    } else {
+        dataSize = CBRX1_BUFFER_SIZE - (cbRx1Tail - cbRx1Head);
     }
     return dataSize;
 }
 
-int CB_RX1_GetRemainingSize(void) {    
+int CB_RX1_GetRemainingSize(void) {
     return CBRX1_BUFFER_SIZE - CB_RX1_GetDataSize();
 }
 

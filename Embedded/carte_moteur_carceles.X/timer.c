@@ -81,15 +81,21 @@ void InitTimer1(void) {
 }
 
 //Interruption du timer 1
-int QeiSendCounter=0;
+int QeiSendCounter = 0;
+
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
+    QEIUpdateData();
     UpdateAsservissement();
     PWMUpdateSpeed();
-    ADC1StartConversionSequence();    
-    QEIUpdateData();
-    if(QeiSendCounter++%25==0)
+    ADC1StartConversionSequence();
+    if (QeiSendCounter++ % 25 == 0) 
+    {
         SendPositionData();
+        DisplayAsservConstant();
+        DisplayAsservVariables();
+    }
+
 }
 
 // Initialisation d'un 2e timer 16 bits
@@ -102,13 +108,13 @@ void SetFreqTimer4(float fr) {
             T4CONbits.TCKPS = 0b10; //10 = 1:64 prescaler value
             if (FCY / fr / 64 > 65535) {
                 T4CONbits.TCKPS = 0b11; //11 = 1:256 prescaler value
-                PR1 = (int) (FCY / fr / 256);
+                PR4 = (int) (FCY / fr / 256);
             } else
-                PR1 = (int) (FCY / fr / 64);
+                PR4 = (int) (FCY / fr / 64);
         } else
-            PR1 = (int) (FCY / fr / 8);
+            PR4 = (int) (FCY / fr / 8);
     } else
-        PR1 = (int) (FCY / fr);
+        PR4 = (int) (FCY / fr);
 }
 
 void initTimer4(void) {
@@ -116,8 +122,6 @@ void initTimer4(void) {
     //Timer4 pour horodater les mesures (1ms)
     T4CONbits.TON = 0; // Disable Timer
     T4CONbits.TCS = 0; //clock source = internal clock
-
-
 
     IFS1bits.T4IF = 0; // Clear Timer Interrupt Flag
     IEC1bits.T4IE = 1; // Enable Timer interrupt

@@ -20,24 +20,24 @@ typedef struct robotStateBITS {
             float distanceTelemetreGauche;
             float distanceTelemetreExGauche;
             float distanceTelemetreExDroit;
-            double xPosFromOdometry;
-            double yPosFromOdometry;
-            double angleRadianFromOdometry;
-            double xPosFromOdometry_1;
-            double yPosFromOdometry_1;
-            double angleRadianFromOdometry_1;
-            double vitesseDroitFromOdometry;
-            double vitesseGaucheFromOdometry;
-            double vitesseLineaireFromOdometry;
-            double vitesseAngulaireFromOdometry;
-            double vitesseLineaireCommand;
-            double vitesseAngulaireCommand;
+            float xPosFromOdometry;
+            float yPosFromOdometry;
+            float angleRadianFromOdometry;
+            float xPosFromOdometry_1;
+            float yPosFromOdometry_1;
+            float angleRadianFromOdometry_1;
+            float vitesseDroitFromOdometry;
+            float vitesseGaucheFromOdometry;
+            float vitesseLineaireFromOdometry;
+            float vitesseAngulaireFromOdometry;
+            float vitesseLineaireCommand;
+            float vitesseAngulaireCommand;
             
             PidCorrector PidX;
             PidCorrector PidTheta;
-            double xCorrectionVitessePourcent;
-            double thetaCorrectionVitessePourcent;
-            double PWMSetSpeedConsignePolaire;
+            float xCorrectionVitessePourcent;
+            float thetaCorrectionVitessePourcent;
+            float PWMSetSpeedConsignePolaire;
 
         }
         ;

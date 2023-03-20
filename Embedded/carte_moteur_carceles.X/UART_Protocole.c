@@ -80,11 +80,16 @@ void UartDecodeMessage(unsigned char c) {
             break;
         case PayloadLengthLSB:
             msgDecodedPayloadLength += c << 0;
-            if (msgDecodedPayloadLength == 0) {
+            if (msgDecodedPayloadLength == 0) 
+            {
                 rcvState = CheckSum;
-            } else if (msgDecodedPayloadLength >= 128) {
+            } 
+            else if (msgDecodedPayloadLength >= 128) 
+            {
                 rcvState = Waiting;
-            } else {
+            } 
+            else 
+            {
                 msgDecodedPayloadIndex = 0;
                 rcvState = Payload;
             }
@@ -124,8 +129,7 @@ void UartProcessDecodedMessage(int function,
         case SET_ROBOT_MANUAL_CONTROL:
             SetRobotAutoControlState(payload[0]);
             break;
-        case PC_TO_R_ASSERVISSEMENT_CONSTANTS:
-            
+        case PC_TO_R_ASSERVISSEMENT_CONSTANTS:            
             SetAsservissement(payload);
             DisplayAsservConstant();
             DisplayAsservVariables();

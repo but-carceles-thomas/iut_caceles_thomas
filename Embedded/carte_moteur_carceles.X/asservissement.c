@@ -16,7 +16,7 @@ void SetupPidAsservissement(volatile PidCorrector* PidCorr, double Kp, double Ki
     PidCorr->erreurIntegraleMax = integralMax; //On limite la correction due au Ki
     PidCorr->Kd = Kd;
     PidCorr->erreurDeriveeMax = deriveeMax;
-    //PidCorr->Consigne = consigne;
+    PidCorr->Consigne = consigne;
 }
 
 void SetAsservissement(unsigned char * payload) {
@@ -99,6 +99,6 @@ void UpdateAsservissement() {
     robotState.thetaCorrectionVitessePourcent = Correcteur(&robotState.PidTheta, robotState.PidTheta.erreur);
     
     double coeff = 50;
-    robotState.vitesseGaucheConsigne = coeff * (robotState.vitesseLineaireCommand - DISTROUES / 2 * robotState.vitesseAngulaireCommand);
-    robotState.vitesseDroiteConsigne = coeff * (robotState.vitesseLineaireCommand + DISTROUES / 2 * robotState.vitesseAngulaireCommand);
+    robotState.vitesseGaucheConsigne = coeff * (robotState.xCorrectionVitessePourcent - DISTROUES / 2 * robotState.thetaCorrectionVitessePourcent);
+    robotState.vitesseDroiteConsigne = coeff * (robotState.xCorrectionVitessePourcent + DISTROUES / 2 * robotState.thetaCorrectionVitessePourcent);
 }
