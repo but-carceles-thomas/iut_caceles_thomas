@@ -536,15 +536,15 @@ namespace RobotVisu
 
         private void buttonasserv_Click(object sender, RoutedEventArgs e)
         {
-            float kpX = 5;
-            float kiX = 0;
+            float kpX = 8;
+            float kiX = 13;
             float kdX = 0;
             float propXmax = 1000;
             float inteXmax = 1000;
             float deriXmax = 1000;
 
-            float kpT = 0;
-            float kiT = 0;
+            float kpT = 8;
+            float kiT = 13;
             float kdT = 0;
             float propTmax = 1000;
             float inteTmax = 1000;
