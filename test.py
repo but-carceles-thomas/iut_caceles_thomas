@@ -19,9 +19,9 @@ B, G, R = cv2.split(img)
 #converting the image to HSV color space using cvtColor function
 imagehsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 H, S, V = cv2.split(imagehsv)
-#cv2.imshow("Hue", H)
-#cv2.imshow("Saturation", S)
-#cv2.imshow("Value", V)
+cv2.imshow("Hue", H)
+cv2.imshow("Saturation", S)
+cv2.imshow("Value", V)
 
 #Definition des limites basses et hautes de la couleur jaune en HSV
 #A noter que le jaune se situe vers les 25 degres dans la roue de couleur HSV en H
@@ -110,7 +110,8 @@ plt.plot(cdfEq_normalized, color = 'b')
 plt.hist(imgEqu.flatten(),256,[0,256], color = 'r')
 plt.xlim([0,256])
 plt.legend(('cdfEq','histogramEq'), loc = 'upper left')
-#plt.show()
+#plt.show()
+
 
 
 Heq = cv2.equalizeHist(H)
